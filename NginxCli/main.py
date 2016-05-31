@@ -6,6 +6,9 @@ server_name = '127.0.0.1'
 server_port = '8000'
 document_root = '/usr/local/'
 
+def find_nginx_conf():
+	
+
 def gen_server_config():
 	with open("php.template", 'r') as file:
 		content = file.read();
