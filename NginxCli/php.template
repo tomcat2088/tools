@@ -1,7 +1,7 @@
 server {
     listen   {{server_port}};
     server_name {{server_name}};
-    rewrite 301 http://{{server_name}}:{{port}}$request_uri permanent;
+    rewrite 301 http://{{server_name}}:{{server_port}}$request_uri permanent;
 
     # root directive should be global
     root   {{document_root}};
