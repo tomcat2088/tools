@@ -45,8 +45,16 @@ extern int yydebug;
 # define YYTOKENTYPE
   enum yytokentype
   {
-    FLOAT = 258,
-    STRING = 259
+    CR = 258,
+    ADD = 259,
+    SUB = 260,
+    MUL = 261,
+    DIV = 262,
+    LB = 263,
+    RB = 264,
+    MMUL = 265,
+    FLOAT = 266,
+    STRING = 267
   };
 #endif
 
@@ -55,12 +63,12 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 8 "parse.y" /* yacc.c:1915  */
+#line 9 "parse.y" /* yacc.c:1915  */
 
 	float 	fval;
 	char* 	sval;
 
-#line 64 "parse.tab.h" /* yacc.c:1915  */
+#line 72 "parse.tab.h" /* yacc.c:1915  */
 };
 
 typedef union YYSTYPE YYSTYPE;
