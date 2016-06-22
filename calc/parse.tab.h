@@ -53,8 +53,10 @@ extern int yydebug;
     LB = 263,
     RB = 264,
     MMUL = 265,
-    FLOAT = 266,
-    STRING = 267
+    EQ = 266,
+    FLOAT = 267,
+    STRING = 268,
+    VAR = 269
   };
 #endif
 
@@ -63,12 +65,12 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 9 "parse.y" /* yacc.c:1915  */
+#line 10 "parse.y" /* yacc.c:1915  */
 
 	float 	fval;
 	char* 	sval;
 
-#line 72 "parse.tab.h" /* yacc.c:1915  */
+#line 74 "parse.tab.h" /* yacc.c:1915  */
 };
 
 typedef union YYSTYPE YYSTYPE;

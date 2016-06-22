@@ -1,9 +1,10 @@
 %{
 #include <stdio.h>
+#include "var_list.c"
 #define YYDEBUG 1
-	int yylex();
-	int yyparse();
-	void yyerror(const char *s);
+	extern "C" int yylex();
+	extern "C" int yyparse();
+	extern "C" void yyerror(const char *s);
 %}
 
 %union {
@@ -11,11 +12,11 @@
 	char* 	sval;
 }
 
-%token CR ADD SUB MUL DIV LB RB MMUL
+%token CR ADD SUB MUL DIV LB RB MMUL EQ
 %token <fval> FLOAT
-%token <sval> STRING
+%token <sval> STRING VAR
 
-%type <fval> exp primary_exp NUM mid_exp
+%type <fval> exp primary_exp NUM mid_exp stmt
 %%
 
 line_list:
@@ -24,7 +25,12 @@ line_list:
 	;
 
 line:
-	exp CR {printf("%f\n",$1);}
+	CR
+	| stmt CR {printf("%f\n",$1);}
+
+stmt:
+	exp
+	| VAR EQ exp { $$ = $3; set_var($1,$3);}
 
 exp:
 	primary_exp
@@ -50,6 +56,7 @@ mid_exp:
 	}
 NUM:
 	FLOAT
+	|VAR { $$ = get_var($1);}
 	|SUB NUM {$$ = - $2;}
 	|LB exp RB {$$ = $2;}
 	
