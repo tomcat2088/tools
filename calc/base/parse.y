@@ -1,7 +1,7 @@
 %{
-#include <stdio.h>
-#include "var_list.c"
-#define YYDEBUG 1
+    #include <stdio.h>
+    #include "var_list.c"
+    #define YYDEBUG 1
 	extern "C" int yylex();
 	extern "C" int yyparse();
 	extern "C" void yyerror(const char *s);
@@ -42,10 +42,10 @@ primary_exp:
 	mid_exp
 	| primary_exp MUL mid_exp { $$ = $1 * $3; }
 	| primary_exp DIV mid_exp { $$ = $1 / $3; }
-	
+
 mid_exp:
 	NUM
-	|mid_exp MMUL mid_exp { 
+	|mid_exp MMUL mid_exp {
 		int i=0;
 		float res = 1;
 		for(i=0;i<$3;i++)
@@ -59,14 +59,14 @@ NUM:
 	|VAR { $$ = get_var($1);}
 	|SUB NUM {$$ = - $2;}
 	|LB exp RB {$$ = $2;}
-	
+
 %%
 
 int main(int argc,char** argv)
 {
-	return yyparse();
+    return yyparse();
 }
 
 void yyerror (char const *s) {
-   printf ("%s\n", s);
- }
+    printf ("%s\n", s);
+}

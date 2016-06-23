@@ -64,9 +64,9 @@
 /* Copy the first part of user declarations.  */
 #line 1 "parse.y" /* yacc.c:339  */
 
-#include <stdio.h>
-#include "var_list.c"
-#define YYDEBUG 1
+    #include <stdio.h>
+    #include "var_list.c"
+    #define YYDEBUG 1
 	extern "C" int yylex();
 	extern "C" int yyparse();
 	extern "C" void yyerror(const char *s);
@@ -1269,7 +1269,7 @@ yyreduce:
 
   case 15:
 #line 48 "parse.y" /* yacc.c:1661  */
-    { 
+    {
 		int i=0;
 		float res = 1;
 		for(i=0;i<(yyvsp[0].fval);i++)
@@ -1533,9 +1533,9 @@ yyreturn:
 
 int main(int argc,char** argv)
 {
-	return yyparse();
+    return yyparse();
 }
 
 void yyerror (char const *s) {
-   printf ("%s\n", s);
- }
+    printf ("%s\n", s);
+}
