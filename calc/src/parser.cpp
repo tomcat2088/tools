@@ -62,7 +62,7 @@
 
 
 /* Copy the first part of user declarations.  */
-#line 1 "parse.y" /* yacc.c:339  */
+#line 1 "/Users/ocean/Documents/projects/workspace/tools/calc/src/bison/parser.y" /* yacc.c:339  */
 
     #include <stdio.h>
     #include "var_list.c"
@@ -71,7 +71,7 @@
 	extern "C" int yyparse();
 	extern "C" void yyerror(const char *s);
 
-#line 75 "parse.tab.c" /* yacc.c:339  */
+#line 75 "/Users/ocean/Documents/projects/workspace/tools/calc/src/parser.cpp" /* yacc.c:339  */
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -90,9 +90,9 @@
 #endif
 
 /* In a future release of Bison, this section will be replaced
-   by #include "parse.tab.h".  */
-#ifndef YY_YY_PARSE_TAB_H_INCLUDED
-# define YY_YY_PARSE_TAB_H_INCLUDED
+   by #include "parser.hpp".  */
+#ifndef YY_YY_USERS_OCEAN_DOCUMENTS_PROJECTS_WORKSPACE_TOOLS_CALC_SRC_PARSER_HPP_INCLUDED
+# define YY_YY_USERS_OCEAN_DOCUMENTS_PROJECTS_WORKSPACE_TOOLS_CALC_SRC_PARSER_HPP_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
@@ -120,18 +120,31 @@ extern int yydebug;
     VAR = 269
   };
 #endif
+/* Tokens.  */
+#define CR 258
+#define ADD 259
+#define SUB 260
+#define MUL 261
+#define DIV 262
+#define LB 263
+#define RB 264
+#define MMUL 265
+#define EQ 266
+#define FLOAT 267
+#define STRING 268
+#define VAR 269
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 
 union YYSTYPE
 {
-#line 10 "parse.y" /* yacc.c:355  */
+#line 10 "/Users/ocean/Documents/projects/workspace/tools/calc/src/bison/parser.y" /* yacc.c:355  */
 
 	float 	fval;
 	char* 	sval;
 
-#line 135 "parse.tab.c" /* yacc.c:355  */
+#line 148 "/Users/ocean/Documents/projects/workspace/tools/calc/src/parser.cpp" /* yacc.c:355  */
 };
 
 typedef union YYSTYPE YYSTYPE;
@@ -144,11 +157,11 @@ extern YYSTYPE yylval;
 
 int yyparse (void);
 
-#endif /* !YY_YY_PARSE_TAB_H_INCLUDED  */
+#endif /* !YY_YY_USERS_OCEAN_DOCUMENTS_PROJECTS_WORKSPACE_TOOLS_CALC_SRC_PARSER_HPP_INCLUDED  */
 
 /* Copy the second part of user declarations.  */
 
-#line 152 "parse.tab.c" /* yacc.c:358  */
+#line 165 "/Users/ocean/Documents/projects/workspace/tools/calc/src/parser.cpp" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -1232,43 +1245,43 @@ yyreduce:
   switch (yyn)
     {
         case 5:
-#line 29 "parse.y" /* yacc.c:1661  */
+#line 29 "/Users/ocean/Documents/projects/workspace/tools/calc/src/bison/parser.y" /* yacc.c:1661  */
     {printf("%f\n",(yyvsp[-1].fval));}
-#line 1238 "parse.tab.c" /* yacc.c:1661  */
+#line 1251 "/Users/ocean/Documents/projects/workspace/tools/calc/src/parser.cpp" /* yacc.c:1661  */
     break;
 
   case 7:
-#line 33 "parse.y" /* yacc.c:1661  */
+#line 33 "/Users/ocean/Documents/projects/workspace/tools/calc/src/bison/parser.y" /* yacc.c:1661  */
     { (yyval.fval) = (yyvsp[0].fval); set_var((yyvsp[-2].sval),(yyvsp[0].fval));}
-#line 1244 "parse.tab.c" /* yacc.c:1661  */
+#line 1257 "/Users/ocean/Documents/projects/workspace/tools/calc/src/parser.cpp" /* yacc.c:1661  */
     break;
 
   case 9:
-#line 37 "parse.y" /* yacc.c:1661  */
+#line 37 "/Users/ocean/Documents/projects/workspace/tools/calc/src/bison/parser.y" /* yacc.c:1661  */
     { (yyval.fval) = (yyvsp[-2].fval) + (yyvsp[0].fval);}
-#line 1250 "parse.tab.c" /* yacc.c:1661  */
+#line 1263 "/Users/ocean/Documents/projects/workspace/tools/calc/src/parser.cpp" /* yacc.c:1661  */
     break;
 
   case 10:
-#line 38 "parse.y" /* yacc.c:1661  */
+#line 38 "/Users/ocean/Documents/projects/workspace/tools/calc/src/bison/parser.y" /* yacc.c:1661  */
     { (yyval.fval) = (yyvsp[-2].fval) - (yyvsp[0].fval);}
-#line 1256 "parse.tab.c" /* yacc.c:1661  */
+#line 1269 "/Users/ocean/Documents/projects/workspace/tools/calc/src/parser.cpp" /* yacc.c:1661  */
     break;
 
   case 12:
-#line 43 "parse.y" /* yacc.c:1661  */
+#line 43 "/Users/ocean/Documents/projects/workspace/tools/calc/src/bison/parser.y" /* yacc.c:1661  */
     { (yyval.fval) = (yyvsp[-2].fval) * (yyvsp[0].fval); }
-#line 1262 "parse.tab.c" /* yacc.c:1661  */
+#line 1275 "/Users/ocean/Documents/projects/workspace/tools/calc/src/parser.cpp" /* yacc.c:1661  */
     break;
 
   case 13:
-#line 44 "parse.y" /* yacc.c:1661  */
+#line 44 "/Users/ocean/Documents/projects/workspace/tools/calc/src/bison/parser.y" /* yacc.c:1661  */
     { (yyval.fval) = (yyvsp[-2].fval) / (yyvsp[0].fval); }
-#line 1268 "parse.tab.c" /* yacc.c:1661  */
+#line 1281 "/Users/ocean/Documents/projects/workspace/tools/calc/src/parser.cpp" /* yacc.c:1661  */
     break;
 
   case 15:
-#line 48 "parse.y" /* yacc.c:1661  */
+#line 48 "/Users/ocean/Documents/projects/workspace/tools/calc/src/bison/parser.y" /* yacc.c:1661  */
     {
 		int i=0;
 		float res = 1;
@@ -1278,29 +1291,29 @@ yyreduce:
 		}
 		(yyval.fval) = res;
 	}
-#line 1282 "parse.tab.c" /* yacc.c:1661  */
+#line 1295 "/Users/ocean/Documents/projects/workspace/tools/calc/src/parser.cpp" /* yacc.c:1661  */
     break;
 
   case 17:
-#line 59 "parse.y" /* yacc.c:1661  */
+#line 59 "/Users/ocean/Documents/projects/workspace/tools/calc/src/bison/parser.y" /* yacc.c:1661  */
     { (yyval.fval) = get_var((yyvsp[0].sval));}
-#line 1288 "parse.tab.c" /* yacc.c:1661  */
+#line 1301 "/Users/ocean/Documents/projects/workspace/tools/calc/src/parser.cpp" /* yacc.c:1661  */
     break;
 
   case 18:
-#line 60 "parse.y" /* yacc.c:1661  */
+#line 60 "/Users/ocean/Documents/projects/workspace/tools/calc/src/bison/parser.y" /* yacc.c:1661  */
     {(yyval.fval) = - (yyvsp[0].fval);}
-#line 1294 "parse.tab.c" /* yacc.c:1661  */
+#line 1307 "/Users/ocean/Documents/projects/workspace/tools/calc/src/parser.cpp" /* yacc.c:1661  */
     break;
 
   case 19:
-#line 61 "parse.y" /* yacc.c:1661  */
+#line 61 "/Users/ocean/Documents/projects/workspace/tools/calc/src/bison/parser.y" /* yacc.c:1661  */
     {(yyval.fval) = (yyvsp[-1].fval);}
-#line 1300 "parse.tab.c" /* yacc.c:1661  */
+#line 1313 "/Users/ocean/Documents/projects/workspace/tools/calc/src/parser.cpp" /* yacc.c:1661  */
     break;
 
 
-#line 1304 "parse.tab.c" /* yacc.c:1661  */
+#line 1317 "/Users/ocean/Documents/projects/workspace/tools/calc/src/parser.cpp" /* yacc.c:1661  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1528,7 +1541,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 63 "parse.y" /* yacc.c:1906  */
+#line 63 "/Users/ocean/Documents/projects/workspace/tools/calc/src/bison/parser.y" /* yacc.c:1906  */
 
 
 int main(int argc,char** argv)

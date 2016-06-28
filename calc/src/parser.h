@@ -30,8 +30,8 @@
    This special exception was added by the Free Software Foundation in
    version 2.2 of Bison.  */
 
-#ifndef YY_YY_PARSE_TAB_H_INCLUDED
-# define YY_YY_PARSE_TAB_H_INCLUDED
+#ifndef YY_YY_USERS_OCEAN_DOCUMENTS_PROJECTS_WORKSPACE_TOOLS_CALC_SRC_PARSER_H_INCLUDED
+# define YY_YY_USERS_OCEAN_DOCUMENTS_PROJECTS_WORKSPACE_TOOLS_CALC_SRC_PARSER_H_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
@@ -59,18 +59,31 @@ extern int yydebug;
     VAR = 269
   };
 #endif
+/* Tokens.  */
+#define CR 258
+#define ADD 259
+#define SUB 260
+#define MUL 261
+#define DIV 262
+#define LB 263
+#define RB 264
+#define MMUL 265
+#define EQ 266
+#define FLOAT 267
+#define STRING 268
+#define VAR 269
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 
 union YYSTYPE
 {
-#line 10 "parse.y" /* yacc.c:1915  */
+#line 10 "/Users/ocean/Documents/projects/workspace/tools/calc/src/bison/parser.y" /* yacc.c:1915  */
 
 	float 	fval;
 	char* 	sval;
 
-#line 74 "parse.tab.h" /* yacc.c:1915  */
+#line 87 "/Users/ocean/Documents/projects/workspace/tools/calc/src/parser.h" /* yacc.c:1915  */
 };
 
 typedef union YYSTYPE YYSTYPE;
@@ -83,4 +96,4 @@ extern YYSTYPE yylval;
 
 int yyparse (void);
 
-#endif /* !YY_YY_PARSE_TAB_H_INCLUDED  */
+#endif /* !YY_YY_USERS_OCEAN_DOCUMENTS_PROJECTS_WORKSPACE_TOOLS_CALC_SRC_PARSER_H_INCLUDED  */

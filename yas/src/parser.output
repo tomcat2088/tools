@@ -1,0 +1,421 @@
+Terminals unused in grammar
+
+   STRING
+
+
+State 31 conflicts: 1 shift/reduce
+
+
+Grammar
+
+    0 $accept: line_list $end
+
+    1 line_list: line
+    2          | line_list line
+
+    3 line: CR
+    4     | stmt CR
+
+    5 stmt: exp
+    6     | VAR EQ exp
+
+    7 exp: primary_exp
+    8    | exp ADD primary_exp
+    9    | exp SUB primary_exp
+
+   10 primary_exp: mid_exp
+   11            | primary_exp MUL mid_exp
+   12            | primary_exp DIV mid_exp
+
+   13 mid_exp: NUM
+   14        | mid_exp MMUL mid_exp
+
+   15 NUM: FLOAT
+   16    | VAR
+   17    | SUB NUM
+   18    | LB exp RB
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+error (256)
+CR (258) 3 4
+ADD (259) 8
+SUB (260) 9 17
+MUL (261) 11
+DIV (262) 12
+LB (263) 18
+RB (264) 18
+MMUL (265) 14
+EQ (266) 6
+FLOAT (267) 15
+STRING (268)
+VAR (269) 6 16
+
+
+Nonterminals, with rules where they appear
+
+$accept (15)
+    on left: 0
+line_list (16)
+    on left: 1 2, on right: 0 2
+line (17)
+    on left: 3 4, on right: 1 2
+stmt (18)
+    on left: 5 6, on right: 4
+exp (19)
+    on left: 7 8 9, on right: 5 6 8 9 18
+primary_exp (20)
+    on left: 10 11 12, on right: 7 8 9 11 12
+mid_exp (21)
+    on left: 13 14, on right: 10 11 12 14
+NUM (22)
+    on left: 15 16 17 18, on right: 13 17
+
+
+State 0
+
+    0 $accept: . line_list $end
+
+    CR     shift, and go to state 1
+    SUB    shift, and go to state 2
+    LB     shift, and go to state 3
+    FLOAT  shift, and go to state 4
+    VAR    shift, and go to state 5
+
+    line_list    go to state 6
+    line         go to state 7
+    stmt         go to state 8
+    exp          go to state 9
+    primary_exp  go to state 10
+    mid_exp      go to state 11
+    NUM          go to state 12
+
+
+State 1
+
+    3 line: CR .
+
+    $default  reduce using rule 3 (line)
+
+
+State 2
+
+   17 NUM: SUB . NUM
+
+    SUB    shift, and go to state 2
+    LB     shift, and go to state 3
+    FLOAT  shift, and go to state 4
+    VAR    shift, and go to state 13
+
+    NUM  go to state 14
+
+
+State 3
+
+   18 NUM: LB . exp RB
+
+    SUB    shift, and go to state 2
+    LB     shift, and go to state 3
+    FLOAT  shift, and go to state 4
+    VAR    shift, and go to state 13
+
+    exp          go to state 15
+    primary_exp  go to state 10
+    mid_exp      go to state 11
+    NUM          go to state 12
+
+
+State 4
+
+   15 NUM: FLOAT .
+
+    $default  reduce using rule 15 (NUM)
+
+
+State 5
+
+    6 stmt: VAR . EQ exp
+   16 NUM: VAR .
+
+    EQ  shift, and go to state 16
+
+    $default  reduce using rule 16 (NUM)
+
+
+State 6
+
+    0 $accept: line_list . $end
+    2 line_list: line_list . line
+
+    $end   shift, and go to state 17
+    CR     shift, and go to state 1
+    SUB    shift, and go to state 2
+    LB     shift, and go to state 3
+    FLOAT  shift, and go to state 4
+    VAR    shift, and go to state 5
+
+    line         go to state 18
+    stmt         go to state 8
+    exp          go to state 9
+    primary_exp  go to state 10
+    mid_exp      go to state 11
+    NUM          go to state 12
+
+
+State 7
+
+    1 line_list: line .
+
+    $default  reduce using rule 1 (line_list)
+
+
+State 8
+
+    4 line: stmt . CR
+
+    CR  shift, and go to state 19
+
+
+State 9
+
+    5 stmt: exp .
+    8 exp: exp . ADD primary_exp
+    9    | exp . SUB primary_exp
+
+    ADD  shift, and go to state 20
+    SUB  shift, and go to state 21
+
+    $default  reduce using rule 5 (stmt)
+
+
+State 10
+
+    7 exp: primary_exp .
+   11 primary_exp: primary_exp . MUL mid_exp
+   12            | primary_exp . DIV mid_exp
+
+    MUL  shift, and go to state 22
+    DIV  shift, and go to state 23
+
+    $default  reduce using rule 7 (exp)
+
+
+State 11
+
+   10 primary_exp: mid_exp .
+   14 mid_exp: mid_exp . MMUL mid_exp
+
+    MMUL  shift, and go to state 24
+
+    $default  reduce using rule 10 (primary_exp)
+
+
+State 12
+
+   13 mid_exp: NUM .
+
+    $default  reduce using rule 13 (mid_exp)
+
+
+State 13
+
+   16 NUM: VAR .
+
+    $default  reduce using rule 16 (NUM)
+
+
+State 14
+
+   17 NUM: SUB NUM .
+
+    $default  reduce using rule 17 (NUM)
+
+
+State 15
+
+    8 exp: exp . ADD primary_exp
+    9    | exp . SUB primary_exp
+   18 NUM: LB exp . RB
+
+    ADD  shift, and go to state 20
+    SUB  shift, and go to state 21
+    RB   shift, and go to state 25
+
+
+State 16
+
+    6 stmt: VAR EQ . exp
+
+    SUB    shift, and go to state 2
+    LB     shift, and go to state 3
+    FLOAT  shift, and go to state 4
+    VAR    shift, and go to state 13
+
+    exp          go to state 26
+    primary_exp  go to state 10
+    mid_exp      go to state 11
+    NUM          go to state 12
+
+
+State 17
+
+    0 $accept: line_list $end .
+
+    $default  accept
+
+
+State 18
+
+    2 line_list: line_list line .
+
+    $default  reduce using rule 2 (line_list)
+
+
+State 19
+
+    4 line: stmt CR .
+
+    $default  reduce using rule 4 (line)
+
+
+State 20
+
+    8 exp: exp ADD . primary_exp
+
+    SUB    shift, and go to state 2
+    LB     shift, and go to state 3
+    FLOAT  shift, and go to state 4
+    VAR    shift, and go to state 13
+
+    primary_exp  go to state 27
+    mid_exp      go to state 11
+    NUM          go to state 12
+
+
+State 21
+
+    9 exp: exp SUB . primary_exp
+
+    SUB    shift, and go to state 2
+    LB     shift, and go to state 3
+    FLOAT  shift, and go to state 4
+    VAR    shift, and go to state 13
+
+    primary_exp  go to state 28
+    mid_exp      go to state 11
+    NUM          go to state 12
+
+
+State 22
+
+   11 primary_exp: primary_exp MUL . mid_exp
+
+    SUB    shift, and go to state 2
+    LB     shift, and go to state 3
+    FLOAT  shift, and go to state 4
+    VAR    shift, and go to state 13
+
+    mid_exp  go to state 29
+    NUM      go to state 12
+
+
+State 23
+
+   12 primary_exp: primary_exp DIV . mid_exp
+
+    SUB    shift, and go to state 2
+    LB     shift, and go to state 3
+    FLOAT  shift, and go to state 4
+    VAR    shift, and go to state 13
+
+    mid_exp  go to state 30
+    NUM      go to state 12
+
+
+State 24
+
+   14 mid_exp: mid_exp MMUL . mid_exp
+
+    SUB    shift, and go to state 2
+    LB     shift, and go to state 3
+    FLOAT  shift, and go to state 4
+    VAR    shift, and go to state 13
+
+    mid_exp  go to state 31
+    NUM      go to state 12
+
+
+State 25
+
+   18 NUM: LB exp RB .
+
+    $default  reduce using rule 18 (NUM)
+
+
+State 26
+
+    6 stmt: VAR EQ exp .
+    8 exp: exp . ADD primary_exp
+    9    | exp . SUB primary_exp
+
+    ADD  shift, and go to state 20
+    SUB  shift, and go to state 21
+
+    $default  reduce using rule 6 (stmt)
+
+
+State 27
+
+    8 exp: exp ADD primary_exp .
+   11 primary_exp: primary_exp . MUL mid_exp
+   12            | primary_exp . DIV mid_exp
+
+    MUL  shift, and go to state 22
+    DIV  shift, and go to state 23
+
+    $default  reduce using rule 8 (exp)
+
+
+State 28
+
+    9 exp: exp SUB primary_exp .
+   11 primary_exp: primary_exp . MUL mid_exp
+   12            | primary_exp . DIV mid_exp
+
+    MUL  shift, and go to state 22
+    DIV  shift, and go to state 23
+
+    $default  reduce using rule 9 (exp)
+
+
+State 29
+
+   11 primary_exp: primary_exp MUL mid_exp .
+   14 mid_exp: mid_exp . MMUL mid_exp
+
+    MMUL  shift, and go to state 24
+
+    $default  reduce using rule 11 (primary_exp)
+
+
+State 30
+
+   12 primary_exp: primary_exp DIV mid_exp .
+   14 mid_exp: mid_exp . MMUL mid_exp
+
+    MMUL  shift, and go to state 24
+
+    $default  reduce using rule 12 (primary_exp)
+
+
+State 31
+
+   14 mid_exp: mid_exp . MMUL mid_exp
+   14        | mid_exp MMUL mid_exp .
+
+    MMUL  shift, and go to state 24
+
+    MMUL      [reduce using rule 14 (mid_exp)]
+    $default  reduce using rule 14 (mid_exp)
