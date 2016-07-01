@@ -56,9 +56,9 @@ def list_servers(vhosts_path):
 	for x in os.listdir(str(vhosts_path)):
 		print(x)
 
-def create_server(name,conf_content,vhost_path):
+def create_server(name,port,conf_content,vhost_path):
 	if vhost_path:
-		conf_path = vhost_path / (name + '.conf')
+		conf_path = vhost_path / (name + "_" + port + '.conf')
 		print(conf_path)
 		if conf_path.exists():
 			print('Server is already exists!!!')

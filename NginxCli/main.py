@@ -53,7 +53,7 @@ while 1:
 			print(content)
 			choice = input("Want to use this? (yes | no): ")
 			if choice == 'yes' or choice == 'y':
-				create_server(server_name,content,vhost_path)
+				create_server(server_name,server_port,content,vhost_path)
 	elif word == 'rm':
 		server_name = input("Input server_name: ")
 		choice = input("Really want to remove this? (yes | no): ")
