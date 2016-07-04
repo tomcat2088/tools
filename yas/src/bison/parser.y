@@ -12,54 +12,45 @@
 	char* 	sval;
 }
 
-%token CR ADD SUB MUL DIV LB RB MMUL EQ
-%token <fval> FLOAT
-%token <sval> STRING VAR
+%token chunk block stat var exp
+%token <fval> Numeral
+%token <sval> Name LiteralString
 
-%type <fval> exp primary_exp NUM mid_exp stmt
 %%
 
-line_list:
-	line
-	|line_list line
+chunk:
+	block
+	
+block:
+	stat
+	|block stat
 	;
-
-line:
-	CR
-	| stmt CR {printf("%f\n",$1);}
-
-stmt:
-	exp
-	| VAR EQ exp { $$ = $3; set_var($1,$3);}
+	
+stat:
+	var '=' exp
+	|functioncall
+	|if exp then block end
 
 exp:
-	primary_exp
-	| exp ADD primary_exp  { $$ = $1 + $3;}
-	| exp SUB primary_exp  { $$ = $1 - $3;}
-	;
-
-primary_exp:
-	mid_exp
-	| primary_exp MUL mid_exp { $$ = $1 * $3; }
-	| primary_exp DIV mid_exp { $$ = $1 / $3; }
-
-mid_exp:
-	NUM
-	|mid_exp MMUL mid_exp {
-		int i=0;
-		float res = 1;
-		for(i=0;i<$3;i++)
-		{
-			res *= $1;
-		}
-		$$ = res;
-	}
-NUM:
-	FLOAT
-	|VAR { $$ = get_var($1);}
-	|SUB NUM {$$ = - $2;}
-	|LB exp RB {$$ = $2;}
-
+	nil
+	|false
+	|true
+	|Numeral
+	|LiteralString
+	|exp binop exp
+	|unop exp
+	
+functioncall:
+	Name '()'
+	
+binop:
+	'+'
+	|'-'
+	|'*'
+	|'/'
+	
+unop:
+	'-'
 %%
 
 int main(int argc,char** argv)
