@@ -30,8 +30,8 @@
    This special exception was added by the Free Software Foundation in
    version 2.2 of Bison.  */
 
-#ifndef YY_YY_USERS_OCEAN_DOCUMENTS_PROJECTS_WORKSPACE_TOOLS_CALC_SRC_PARSER_HPP_INCLUDED
-# define YY_YY_USERS_OCEAN_DOCUMENTS_PROJECTS_WORKSPACE_TOOLS_CALC_SRC_PARSER_HPP_INCLUDED
+#ifndef YY_YY_USERS_OCEAN_DOCUMENTS_PROJECTS_WORKSPACE_TOOLS_YAS_SRC_PARSER_HPP_INCLUDED
+# define YY_YY_USERS_OCEAN_DOCUMENTS_PROJECTS_WORKSPACE_TOOLS_YAS_SRC_PARSER_HPP_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
@@ -45,45 +45,39 @@ extern int yydebug;
 # define YYTOKENTYPE
   enum yytokentype
   {
-    CR = 258,
-    ADD = 259,
-    SUB = 260,
-    MUL = 261,
-    DIV = 262,
-    LB = 263,
-    RB = 264,
-    MMUL = 265,
-    EQ = 266,
-    FLOAT = 267,
-    STRING = 268,
-    VAR = 269
+    IF = 258,
+    Then = 259,
+    End = 260,
+    False = 261,
+    True = 262,
+    EQ = 263,
+    Numeral = 264,
+    Name = 265,
+    LiteralString = 266
   };
 #endif
 /* Tokens.  */
-#define CR 258
-#define ADD 259
-#define SUB 260
-#define MUL 261
-#define DIV 262
-#define LB 263
-#define RB 264
-#define MMUL 265
-#define EQ 266
-#define FLOAT 267
-#define STRING 268
-#define VAR 269
+#define IF 258
+#define Then 259
+#define End 260
+#define False 261
+#define True 262
+#define EQ 263
+#define Numeral 264
+#define Name 265
+#define LiteralString 266
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 
 union YYSTYPE
 {
-#line 10 "/Users/ocean/Documents/projects/workspace/tools/calc/src/bison/parser.y" /* yacc.c:1915  */
+#line 10 "/Users/ocean/Documents/projects/workspace/tools/yas/src/bison/parser.y" /* yacc.c:1915  */
 
 	float 	fval;
 	char* 	sval;
 
-#line 87 "/Users/ocean/Documents/projects/workspace/tools/calc/src/parser.hpp" /* yacc.c:1915  */
+#line 81 "/Users/ocean/Documents/projects/workspace/tools/yas/src/parser.hpp" /* yacc.c:1915  */
 };
 
 typedef union YYSTYPE YYSTYPE;
@@ -96,4 +90,4 @@ extern YYSTYPE yylval;
 
 int yyparse (void);
 
-#endif /* !YY_YY_USERS_OCEAN_DOCUMENTS_PROJECTS_WORKSPACE_TOOLS_CALC_SRC_PARSER_HPP_INCLUDED  */
+#endif /* !YY_YY_USERS_OCEAN_DOCUMENTS_PROJECTS_WORKSPACE_TOOLS_YAS_SRC_PARSER_HPP_INCLUDED  */

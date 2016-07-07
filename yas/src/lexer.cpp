@@ -1,6 +1,6 @@
-#line 2 "/Users/ocean/Documents/projects/workspace/tools/calc/src/lexer.cpp"
+#line 2 "/Users/ocean/Documents/projects/workspace/tools/yas/src/lexer.cpp"
 
-#line 4 "/Users/ocean/Documents/projects/workspace/tools/calc/src/lexer.cpp"
+#line 4 "/Users/ocean/Documents/projects/workspace/tools/yas/src/lexer.cpp"
 
 #define  YY_INT_ALIGNED short int
 
@@ -361,8 +361,8 @@ static void yy_fatal_error (yyconst char msg[]  );
 	*yy_cp = '\0'; \
 	(yy_c_buf_p) = yy_cp;
 
-#define YY_NUM_RULES 16
-#define YY_END_OF_BUFFER 17
+#define YY_NUM_RULES 13
+#define YY_END_OF_BUFFER 14
 /* This struct is not used in this scanner,
    but its presence is necessary. */
 struct yy_trans_info
@@ -370,29 +370,30 @@ struct yy_trans_info
 	flex_int32_t yy_verify;
 	flex_int32_t yy_nxt;
 	};
-static yyconst flex_int16_t yy_accept[30] =
+static yyconst flex_int16_t yy_accept[39] =
     {   0,
-        0,    0,   14,   14,   17,   16,    1,    2,   13,   11,
-       12,    9,    7,    8,   10,    3,    3,    5,    4,   14,
-       15,    6,    0,    0,    3,    4,   14,    3,    0
+        0,    0,   11,   11,   14,   13,    1,   10,    2,    2,
+        8,    9,    9,    9,    9,    9,   11,   12,    0,    0,
+        2,    9,    9,    9,    3,    9,    9,   11,    2,    5,
+        9,    9,    9,    9,    4,    7,    6,    0
     } ;
 
 static yyconst flex_int32_t yy_ec[256] =
     {   0,
-        1,    1,    1,    1,    1,    1,    1,    1,    2,    3,
+        1,    1,    1,    1,    1,    1,    1,    1,    2,    2,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    2,    1,    4,    1,    1,    1,    1,    1,    5,
-        6,    7,    8,    1,    9,   10,   11,   12,   13,   13,
-       13,   13,   13,   13,   13,   13,   13,    1,    1,    1,
-       14,    1,    1,    1,   15,   15,   15,   15,   15,   15,
-       15,   15,   15,   15,   15,   15,   15,   15,   15,   15,
-       15,   15,   15,   15,   15,   15,   15,   15,   15,   15,
-        1,    1,    1,    1,    1,    1,   15,   15,   15,   15,
+        1,    2,    1,    3,    1,    1,    1,    1,    1,    1,
+        1,    1,    1,    1,    1,    4,    1,    5,    6,    6,
+        6,    6,    6,    6,    6,    6,    6,    1,    1,    1,
+        7,    1,    1,    1,    8,    8,    8,    8,    8,    8,
+        8,    8,    8,    8,    8,    8,    8,    8,    8,    8,
+        8,    8,    8,    8,    8,    8,    8,    8,    8,    8,
+        1,    1,    1,    1,    1,    1,    9,    8,    8,   10,
 
-       15,   15,   15,   15,   15,   15,   15,   15,   15,   15,
-       15,   15,   15,   15,   15,   15,   15,   15,   15,   15,
-       15,   15,    1,    1,    1,    1,    1,    1,    1,    1,
+       11,   12,    8,   13,   14,    8,    8,   15,    8,   16,
+        8,    8,    8,   17,   18,   19,   20,    8,    8,    8,
+        8,    8,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
@@ -409,46 +410,52 @@ static yyconst flex_int32_t yy_ec[256] =
         1,    1,    1,    1,    1
     } ;
 
-static yyconst flex_int32_t yy_meta[16] =
+static yyconst flex_int32_t yy_meta[21] =
     {   0,
-        1,    1,    1,    2,    1,    1,    1,    1,    1,    3,
-        1,    4,    4,    1,    5
+        1,    1,    2,    3,    4,    4,    1,    5,    5,    5,
+        5,    5,    5,    5,    5,    5,    5,    5,    5,    5
     } ;
 
-static yyconst flex_int16_t yy_base[35] =
+static yyconst flex_int16_t yy_base[44] =
     {   0,
-        0,    0,   38,   37,   40,   43,   43,   43,   43,   43,
-       43,   32,   43,   43,   43,   28,   27,   43,    0,    0,
-       43,   43,    4,   26,   22,    0,    0,    6,   43,   19,
-       22,   24,   25,   30
+        0,    0,   56,   55,   57,   60,   60,   60,   52,   51,
+       60,    0,   38,   44,   40,    8,    0,   60,   17,   47,
+       46,    0,   39,   33,    0,   36,   26,    0,   21,    0,
+       27,   28,   29,   13,    0,    0,    0,   60,   27,   30,
+       32,   33,   38
     } ;
 
-static yyconst flex_int16_t yy_def[35] =
+static yyconst flex_int16_t yy_def[44] =
     {   0,
-       29,    1,   30,   30,   29,   29,   29,   29,   29,   29,
-       29,   29,   29,   29,   29,   31,   32,   29,   33,   34,
-       29,   29,   29,   31,   32,   33,   34,   29,    0,   29,
-       29,   29,   29,   29
+       38,    1,   39,   39,   38,   38,   38,   38,   40,   41,
+       38,   42,   42,   42,   42,   42,   43,   38,   38,   40,
+       41,   42,   42,   42,   42,   42,   42,   43,   38,   42,
+       42,   42,   42,   42,   42,   42,   42,    0,   38,   38,
+       38,   38,   38
     } ;
 
-static yyconst flex_int16_t yy_nxt[59] =
+static yyconst flex_int16_t yy_nxt[81] =
     {   0,
-        6,    7,    8,    9,   10,   11,   12,   13,   14,    6,
-       15,   16,   17,   18,   19,   28,   28,   28,   28,   20,
-       20,   20,   20,   20,   24,   24,   25,   25,   26,   26,
-       27,   23,   27,   27,   27,   23,   23,   23,   22,   29,
-       21,   21,    5,   29,   29,   29,   29,   29,   29,   29,
-       29,   29,   29,   29,   29,   29,   29,   29
+        6,    7,    8,    6,    9,   10,   11,   12,   12,   12,
+       13,   14,   12,   15,   12,   12,   12,   12,   16,   12,
+       26,   29,   29,   37,   27,   29,   29,   17,   17,   17,
+       17,   17,   20,   20,   21,   21,   22,   22,   28,   36,
+       28,   28,   28,   35,   34,   33,   32,   31,   30,   19,
+       19,   25,   24,   23,   19,   19,   38,   18,   18,    5,
+       38,   38,   38,   38,   38,   38,   38,   38,   38,   38,
+       38,   38,   38,   38,   38,   38,   38,   38,   38,   38
     } ;
 
-static yyconst flex_int16_t yy_chk[59] =
+static yyconst flex_int16_t yy_chk[81] =
     {   0,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    1,    1,   23,   23,   28,   28,   30,
-       30,   30,   30,   30,   31,   31,   32,   32,   33,   33,
-       34,   25,   34,   34,   34,   24,   17,   16,   12,    5,
-        4,    3,   29,   29,   29,   29,   29,   29,   29,   29,
-       29,   29,   29,   29,   29,   29,   29,   29
+        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+       16,   19,   19,   34,   16,   29,   29,   39,   39,   39,
+       39,   39,   40,   40,   41,   41,   42,   42,   43,   33,
+       43,   43,   43,   32,   31,   27,   26,   24,   23,   21,
+       20,   15,   14,   13,   10,    9,    5,    4,    3,   38,
+       38,   38,   38,   38,   38,   38,   38,   38,   38,   38,
+       38,   38,   38,   38,   38,   38,   38,   38,   38,   38
     } ;
 
 static yy_state_type yy_last_accepting_state;
@@ -465,13 +472,13 @@ int yy_flex_debug = 0;
 #define YY_MORE_ADJ 0
 #define YY_RESTORE_YY_MORE_OFFSET
 char *yytext;
-#line 1 "/Users/ocean/Documents/projects/workspace/tools/calc/src/bison/lexer.l"
-#line 2 "/Users/ocean/Documents/projects/workspace/tools/calc/src/bison/lexer.l"
+#line 1 "/Users/ocean/Documents/projects/workspace/tools/yas/src/bison/lexer.l"
+#line 2 "/Users/ocean/Documents/projects/workspace/tools/yas/src/bison/lexer.l"
 	#include <stdlib.h>
 	#include "parser.hpp"
 	#define YY_DECL extern "C" int yylex()
 
-#line 475 "/Users/ocean/Documents/projects/workspace/tools/calc/src/lexer.cpp"
+#line 482 "/Users/ocean/Documents/projects/workspace/tools/yas/src/lexer.cpp"
 
 #define INITIAL 0
 #define STR 1
@@ -654,9 +661,9 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
     
-#line 8 "/Users/ocean/Documents/projects/workspace/tools/calc/src/bison/lexer.l"
+#line 8 "/Users/ocean/Documents/projects/workspace/tools/yas/src/bison/lexer.l"
 
-#line 660 "/Users/ocean/Documents/projects/workspace/tools/calc/src/lexer.cpp"
+#line 667 "/Users/ocean/Documents/projects/workspace/tools/yas/src/lexer.cpp"
 
 	if ( !(yy_init) )
 		{
@@ -709,13 +716,13 @@ yy_match:
 			while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 				{
 				yy_current_state = (int) yy_def[yy_current_state];
-				if ( yy_current_state >= 30 )
+				if ( yy_current_state >= 39 )
 					yy_c = yy_meta[(unsigned int) yy_c];
 				}
 			yy_current_state = yy_nxt[yy_base[yy_current_state] + (unsigned int) yy_c];
 			++yy_cp;
 			}
-		while ( yy_base[yy_current_state] != 43 );
+		while ( yy_base[yy_current_state] != 60 );
 
 yy_find_action:
 		yy_act = yy_accept[yy_current_state];
@@ -740,88 +747,73 @@ do_action:	/* This label is used only to access EOF actions. */
 			goto yy_find_action;
 
 case 1:
+/* rule 1 can match eol */
 YY_RULE_SETUP
-#line 9 "/Users/ocean/Documents/projects/workspace/tools/calc/src/bison/lexer.l"
+#line 9 "/Users/ocean/Documents/projects/workspace/tools/yas/src/bison/lexer.l"
 ;
 	YY_BREAK
 case 2:
-/* rule 2 can match eol */
 YY_RULE_SETUP
-#line 10 "/Users/ocean/Documents/projects/workspace/tools/calc/src/bison/lexer.l"
-{return CR;};
+#line 11 "/Users/ocean/Documents/projects/workspace/tools/yas/src/bison/lexer.l"
+{yylval.fval = atof(yytext);return Numeral;}
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 12 "/Users/ocean/Documents/projects/workspace/tools/calc/src/bison/lexer.l"
-{yylval.fval = atof(yytext);return FLOAT;}
+#line 12 "/Users/ocean/Documents/projects/workspace/tools/yas/src/bison/lexer.l"
+return IF;
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 13 "/Users/ocean/Documents/projects/workspace/tools/calc/src/bison/lexer.l"
-{yylval.sval = strdup(yytext);return VAR;}
+#line 13 "/Users/ocean/Documents/projects/workspace/tools/yas/src/bison/lexer.l"
+return Then;
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 15 "/Users/ocean/Documents/projects/workspace/tools/calc/src/bison/lexer.l"
-return EQ;
+#line 14 "/Users/ocean/Documents/projects/workspace/tools/yas/src/bison/lexer.l"
+return End;
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 16 "/Users/ocean/Documents/projects/workspace/tools/calc/src/bison/lexer.l"
-return MMUL;
+#line 15 "/Users/ocean/Documents/projects/workspace/tools/yas/src/bison/lexer.l"
+return False;
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 17 "/Users/ocean/Documents/projects/workspace/tools/calc/src/bison/lexer.l"
-return ADD;
+#line 16 "/Users/ocean/Documents/projects/workspace/tools/yas/src/bison/lexer.l"
+return True;
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 18 "/Users/ocean/Documents/projects/workspace/tools/calc/src/bison/lexer.l"
-return SUB;
+#line 17 "/Users/ocean/Documents/projects/workspace/tools/yas/src/bison/lexer.l"
+return EQ;
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 19 "/Users/ocean/Documents/projects/workspace/tools/calc/src/bison/lexer.l"
-return MUL;
+#line 19 "/Users/ocean/Documents/projects/workspace/tools/yas/src/bison/lexer.l"
+{yylval.sval = strdup(yytext);return Name;}
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 20 "/Users/ocean/Documents/projects/workspace/tools/calc/src/bison/lexer.l"
-return DIV;
+#line 20 "/Users/ocean/Documents/projects/workspace/tools/yas/src/bison/lexer.l"
+{BEGIN(STR);}
 	YY_BREAK
 case 11:
+/* rule 11 can match eol */
 YY_RULE_SETUP
-#line 21 "/Users/ocean/Documents/projects/workspace/tools/calc/src/bison/lexer.l"
-return LB;
+#line 21 "/Users/ocean/Documents/projects/workspace/tools/yas/src/bison/lexer.l"
+{yylval.sval = strdup(yytext);return LiteralString;}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 22 "/Users/ocean/Documents/projects/workspace/tools/calc/src/bison/lexer.l"
-return RB;
+#line 22 "/Users/ocean/Documents/projects/workspace/tools/yas/src/bison/lexer.l"
+{BEGIN(INITIAL);}
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 24 "/Users/ocean/Documents/projects/workspace/tools/calc/src/bison/lexer.l"
-{BEGIN(STR);}
-	YY_BREAK
-case 14:
-/* rule 14 can match eol */
-YY_RULE_SETUP
-#line 25 "/Users/ocean/Documents/projects/workspace/tools/calc/src/bison/lexer.l"
-{printf("str : %s",yytext);}
-	YY_BREAK
-case 15:
-YY_RULE_SETUP
-#line 26 "/Users/ocean/Documents/projects/workspace/tools/calc/src/bison/lexer.l"
-{BEGIN(INITIAL);}
-	YY_BREAK
-case 16:
-YY_RULE_SETUP
-#line 27 "/Users/ocean/Documents/projects/workspace/tools/calc/src/bison/lexer.l"
+#line 23 "/Users/ocean/Documents/projects/workspace/tools/yas/src/bison/lexer.l"
 ECHO;
 	YY_BREAK
-#line 825 "/Users/ocean/Documents/projects/workspace/tools/calc/src/lexer.cpp"
+#line 817 "/Users/ocean/Documents/projects/workspace/tools/yas/src/lexer.cpp"
 case YY_STATE_EOF(INITIAL):
 case YY_STATE_EOF(STR):
 	yyterminate();
@@ -1114,7 +1106,7 @@ static int yy_get_next_buffer (void)
 		while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 			{
 			yy_current_state = (int) yy_def[yy_current_state];
-			if ( yy_current_state >= 30 )
+			if ( yy_current_state >= 39 )
 				yy_c = yy_meta[(unsigned int) yy_c];
 			}
 		yy_current_state = yy_nxt[yy_base[yy_current_state] + (unsigned int) yy_c];
@@ -1142,11 +1134,11 @@ static int yy_get_next_buffer (void)
 	while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 		{
 		yy_current_state = (int) yy_def[yy_current_state];
-		if ( yy_current_state >= 30 )
+		if ( yy_current_state >= 39 )
 			yy_c = yy_meta[(unsigned int) yy_c];
 		}
 	yy_current_state = yy_nxt[yy_base[yy_current_state] + (unsigned int) yy_c];
-	yy_is_jam = (yy_current_state == 29);
+	yy_is_jam = (yy_current_state == 38);
 
 	return yy_is_jam ? 0 : yy_current_state;
 }
@@ -1819,6 +1811,6 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 27 "/Users/ocean/Documents/projects/workspace/tools/calc/src/bison/lexer.l"
+#line 23 "/Users/ocean/Documents/projects/workspace/tools/yas/src/bison/lexer.l"
 
 

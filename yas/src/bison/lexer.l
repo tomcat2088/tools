@@ -6,22 +6,18 @@
 
 %START STR
 %%
-<INITIAL>[ \t] ;
-<INITIAL>"\n" {return CR;};
+<INITIAL>[ \t\n] ;
 
-<INITIAL>[1-9][0-9]*|[0-9]+\.[0-9]+|0 {yylval.fval = atof(yytext);return FLOAT;}
-<INITIAL>[a-zA-Z][a-zA-Z0-9]* {yylval.sval = strdup(yytext);return VAR;}
-
+<INITIAL>[1-9][0-9]*|[0-9]+\.[0-9]+|0 {yylval.fval = atof(yytext);return Numeral;}
+<INITIAL>"if" return IF;
+<INITIAL>"then" return Then;
+<INITIAL>"end" return End;
+<INITIAL>"false" return False;
+<INITIAL>"true" return True;
 <INITIAL>"=" return EQ;
-<INITIAL>"**" return MMUL;
-<INITIAL>"+" return ADD;
-<INITIAL>"-" return SUB;
-<INITIAL>"*" return MUL;
-<INITIAL>"/" return DIV;
-<INITIAL>"(" return LB;
-<INITIAL>")" return RB;
 
+<INITIAL>[a-zA-Z][a-zA-Z0-9]* {yylval.sval = strdup(yytext);return Name;}
 <INITIAL>\" {BEGIN(STR);}
-<STR>[^"]* {printf("str : %s",yytext);}
+<STR>[^"]* {yylval.sval = strdup(yytext);return LiteralString;}
 <STR>\" {BEGIN(INITIAL);}
 %%

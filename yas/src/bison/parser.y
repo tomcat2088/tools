@@ -12,7 +12,7 @@
 	char* 	sval;
 }
 
-%token chunk block stat var exp
+%token <sval> IF Then End False True EQ
 %token <fval> Numeral
 %token <sval> Name LiteralString
 
@@ -22,27 +22,27 @@ chunk:
 	block
 	
 block:
-	stat
+    stat
 	|block stat
 	;
 	
 stat:
-	var '=' exp
-	|functioncall
-	|if exp then block end
+	exp                         {printf("exp Found\n");}
+    |var                        {printf("var Found\n");}
+    |var EQ exp                 {printf("assign Found\n");}
+	|IF exp Then block End      {printf("if Found\n");}
 
 exp:
-	nil
-	|false
-	|true
-	|Numeral
-	|LiteralString
+	False
+	|True
+	|Numeral            {printf("Numeral Found\n");}
+	|LiteralString      {printf("LiteralString Found\n");}
 	|exp binop exp
 	|unop exp
 	
-functioncall:
-	Name '()'
-	
+var:
+    Name    
+
 binop:
 	'+'
 	|'-'
@@ -51,6 +51,7 @@ binop:
 	
 unop:
 	'-'
+
 %%
 
 int main(int argc,char** argv)
