@@ -51,9 +51,18 @@ extern int yydebug;
     False = 261,
     True = 262,
     EQ = 263,
-    Numeral = 264,
-    Name = 265,
-    LiteralString = 266
+    SEM = 264,
+    Add = 265,
+    Sub = 266,
+    Mul = 267,
+    Div = 268,
+    LB = 269,
+    RB = 270,
+    Numeral = 271,
+    Name = 272,
+    LiteralString = 273,
+    NEG = 274,
+    BRACE = 275
   };
 #endif
 /* Tokens.  */
@@ -63,9 +72,18 @@ extern int yydebug;
 #define False 261
 #define True 262
 #define EQ 263
-#define Numeral 264
-#define Name 265
-#define LiteralString 266
+#define SEM 264
+#define Add 265
+#define Sub 266
+#define Mul 267
+#define Div 268
+#define LB 269
+#define RB 270
+#define Numeral 271
+#define Name 272
+#define LiteralString 273
+#define NEG 274
+#define BRACE 275
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
@@ -77,7 +95,7 @@ union YYSTYPE
 	float 	fval;
 	char* 	sval;
 
-#line 81 "/Users/ocean/Documents/projects/workspace/tools/yas/src/parser.hpp" /* yacc.c:1915  */
+#line 99 "/Users/ocean/Documents/projects/workspace/tools/yas/src/parser.hpp" /* yacc.c:1915  */
 };
 
 typedef union YYSTYPE YYSTYPE;

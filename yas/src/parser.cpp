@@ -112,9 +112,18 @@ extern int yydebug;
     False = 261,
     True = 262,
     EQ = 263,
-    Numeral = 264,
-    Name = 265,
-    LiteralString = 266
+    SEM = 264,
+    Add = 265,
+    Sub = 266,
+    Mul = 267,
+    Div = 268,
+    LB = 269,
+    RB = 270,
+    Numeral = 271,
+    Name = 272,
+    LiteralString = 273,
+    NEG = 274,
+    BRACE = 275
   };
 #endif
 /* Tokens.  */
@@ -124,9 +133,18 @@ extern int yydebug;
 #define False 261
 #define True 262
 #define EQ 263
-#define Numeral 264
-#define Name 265
-#define LiteralString 266
+#define SEM 264
+#define Add 265
+#define Sub 266
+#define Mul 267
+#define Div 268
+#define LB 269
+#define RB 270
+#define Numeral 271
+#define Name 272
+#define LiteralString 273
+#define NEG 274
+#define BRACE 275
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
@@ -138,7 +156,7 @@ union YYSTYPE
 	float 	fval;
 	char* 	sval;
 
-#line 142 "/Users/ocean/Documents/projects/workspace/tools/yas/src/parser.cpp" /* yacc.c:355  */
+#line 160 "/Users/ocean/Documents/projects/workspace/tools/yas/src/parser.cpp" /* yacc.c:355  */
 };
 
 typedef union YYSTYPE YYSTYPE;
@@ -155,7 +173,7 @@ int yyparse (void);
 
 /* Copy the second part of user declarations.  */
 
-#line 159 "/Users/ocean/Documents/projects/workspace/tools/yas/src/parser.cpp" /* yacc.c:358  */
+#line 177 "/Users/ocean/Documents/projects/workspace/tools/yas/src/parser.cpp" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -395,23 +413,23 @@ union yyalloc
 #endif /* !YYCOPY_NEEDED */
 
 /* YYFINAL -- State number of the termination state.  */
-#define YYFINAL  15
+#define YYFINAL  18
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   45
+#define YYLAST   83
 
 /* YYNTOKENS -- Number of terminals.  */
-#define YYNTOKENS  16
+#define YYNTOKENS  21
 /* YYNNTS -- Number of nonterminals.  */
-#define YYNNTS  8
+#define YYNNTS  6
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  20
+#define YYNRULES  19
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  29
+#define YYNSTATES  36
 
 /* YYTRANSLATE[YYX] -- Symbol number corresponding to YYX as returned
    by yylex, with out-of-bounds checking.  */
 #define YYUNDEFTOK  2
-#define YYMAXUTOK   266
+#define YYMAXUTOK   275
 
 #define YYTRANSLATE(YYX)                                                \
   ((unsigned int) (YYX) <= YYMAXUTOK ? yytranslate[YYX] : YYUNDEFTOK)
@@ -424,7 +442,7 @@ static const yytype_uint8 yytranslate[] =
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-       2,     2,    14,    12,     2,    13,     2,    15,     2,     2,
+       2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
@@ -446,16 +464,16 @@ static const yytype_uint8 yytranslate[] =
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     1,     2,     3,     4,
-       5,     6,     7,     8,     9,    10,    11
+       5,     6,     7,     8,     9,    10,    11,    12,    13,    14,
+      15,    16,    17,    18,    19,    20
 };
 
 #if YYDEBUG
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    22,    22,    25,    26,    30,    31,    32,    33,    36,
-      37,    38,    39,    40,    41,    44,    47,    48,    49,    50,
-      53
+       0,    28,    28,    31,    32,    36,    37,    38,    41,    42,
+      43,    44,    45,    46,    47,    48,    49,    50,    51,    54
 };
 #endif
 
@@ -465,8 +483,9 @@ static const yytype_uint8 yyrline[] =
 static const char *const yytname[] =
 {
   "$end", "error", "$undefined", "IF", "Then", "End", "False", "True",
-  "EQ", "Numeral", "Name", "LiteralString", "'+'", "'-'", "'*'", "'/'",
-  "$accept", "chunk", "block", "stat", "exp", "var", "binop", "unop", YY_NULLPTR
+  "EQ", "SEM", "Add", "Sub", "Mul", "Div", "LB", "RB", "Numeral", "Name",
+  "LiteralString", "NEG", "BRACE", "$accept", "chunk", "block", "stat",
+  "exp", "var", YY_NULLPTR
 };
 #endif
 
@@ -476,14 +495,15 @@ static const char *const yytname[] =
 static const yytype_uint16 yytoknum[] =
 {
        0,   256,   257,   258,   259,   260,   261,   262,   263,   264,
-     265,   266,    43,    45,    42,    47
+     265,   266,   267,   268,   269,   270,   271,   272,   273,   274,
+     275
 };
 # endif
 
-#define YYPACT_NINF -18
+#define YYPACT_NINF -10
 
 #define yypact_value_is_default(Yystate) \
-  (!!((Yystate) == (-18)))
+  (!!((Yystate) == (-10)))
 
 #define YYTABLE_NINF -1
 
@@ -494,9 +514,10 @@ static const yytype_uint16 yytoknum[] =
      STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-      28,    -3,   -18,   -18,   -18,   -18,   -18,   -18,     2,    28,
-     -18,    30,     3,    -3,     1,   -18,   -18,   -18,   -18,   -18,
-     -18,    -3,    -3,    30,    28,    30,    30,    19,   -18
+      47,    60,   -10,   -10,    60,    60,   -10,   -10,   -10,     9,
+      47,   -10,    -7,    14,     3,   -10,   -10,     8,   -10,   -10,
+     -10,    60,    60,    60,    60,    60,    47,   -10,    27,    27,
+     -10,   -10,    70,    31,   -10,   -10
 };
 
   /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -504,21 +525,22 @@ static const yytype_int8 yypact[] =
      means the default is an error.  */
 static const yytype_uint8 yydefact[] =
 {
-       0,     0,     9,    10,    11,    15,    12,    20,     0,     2,
-       3,     5,     6,     0,     0,     1,     4,    16,    17,    18,
-      19,     0,     0,    14,     0,    13,     7,     0,     8
+       0,     0,     8,     9,     0,     0,    10,    19,    11,     0,
+       2,     3,     0,    12,     0,    12,    17,     0,     1,     4,
+       5,     0,     0,     0,     0,     0,     0,    18,    13,    14,
+      15,    16,     0,     0,     6,     7
 };
 
   /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-     -18,   -18,   -17,    -8,    -1,   -18,   -18,   -18
+     -10,   -10,    -1,    -9,     7,     0
 };
 
   /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-      -1,     8,     9,    10,    11,    12,    21,    13
+      -1,     9,    10,    11,    12,    15
 };
 
   /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -526,45 +548,52 @@ static const yytype_int8 yydefgoto[] =
      number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_uint8 yytable[] =
 {
-      14,    16,    15,     2,     3,    24,     4,    27,     6,     0,
-       7,    22,    23,    17,    18,    19,    20,     0,     0,    16,
-      25,    26,     1,     0,    28,     2,     3,     0,     4,     5,
-       6,     1,     7,     0,     2,     3,     0,     4,     5,     6,
-       0,     7,    17,    18,    19,    20
+      13,    19,    20,    21,    22,    23,    24,    26,    14,    18,
+      13,    16,    17,    21,    22,    23,    24,     0,    21,    22,
+      23,    24,    25,    27,    19,    33,    13,     0,    28,    29,
+      30,    31,    32,    13,     1,     0,    35,     2,     3,    23,
+      24,     0,     4,     0,     0,     5,     0,     6,     7,     8,
+       1,     0,     0,     2,     3,     0,     0,     0,     4,     0,
+       0,     5,     0,     6,     7,     8,     2,     3,     0,     0,
+       0,     4,     0,     0,     5,     0,     6,     7,     8,    34,
+      21,    22,    23,    24
 };
 
 static const yytype_int8 yycheck[] =
 {
-       1,     9,     0,     6,     7,     4,     9,    24,    11,    -1,
-      13,     8,    13,    12,    13,    14,    15,    -1,    -1,    27,
-      21,    22,     3,    -1,     5,     6,     7,    -1,     9,    10,
-      11,     3,    13,    -1,     6,     7,    -1,     9,    10,    11,
-      -1,    13,    12,    13,    14,    15
+       0,    10,     9,    10,    11,    12,    13,     4,     1,     0,
+      10,     4,     5,    10,    11,    12,    13,    -1,    10,    11,
+      12,    13,     8,    15,    33,    26,    26,    -1,    21,    22,
+      23,    24,    25,    33,     3,    -1,     5,     6,     7,    12,
+      13,    -1,    11,    -1,    -1,    14,    -1,    16,    17,    18,
+       3,    -1,    -1,     6,     7,    -1,    -1,    -1,    11,    -1,
+      -1,    14,    -1,    16,    17,    18,     6,     7,    -1,    -1,
+      -1,    11,    -1,    -1,    14,    -1,    16,    17,    18,     9,
+      10,    11,    12,    13
 };
 
   /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
      symbol of state STATE-NUM.  */
 static const yytype_uint8 yystos[] =
 {
-       0,     3,     6,     7,     9,    10,    11,    13,    17,    18,
-      19,    20,    21,    23,    20,     0,    19,    12,    13,    14,
-      15,    22,     8,    20,     4,    20,    20,    18,     5
+       0,     3,     6,     7,    11,    14,    16,    17,    18,    22,
+      23,    24,    25,    26,    25,    26,    25,    25,     0,    24,
+       9,    10,    11,    12,    13,     8,     4,    15,    25,    25,
+      25,    25,    25,    23,     9,     5
 };
 
   /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
 static const yytype_uint8 yyr1[] =
 {
-       0,    16,    17,    18,    18,    19,    19,    19,    19,    20,
-      20,    20,    20,    20,    20,    21,    22,    22,    22,    22,
-      23
+       0,    21,    22,    23,    23,    24,    24,    24,    25,    25,
+      25,    25,    25,    25,    25,    25,    25,    25,    25,    26
 };
 
   /* YYR2[YYN] -- Number of symbols on the right hand side of rule YYN.  */
 static const yytype_uint8 yyr2[] =
 {
-       0,     2,     1,     1,     2,     1,     1,     3,     5,     1,
-       1,     1,     1,     3,     2,     1,     1,     1,     1,     1,
-       1
+       0,     2,     1,     1,     2,     2,     4,     5,     1,     1,
+       1,     1,     1,     3,     3,     3,     3,     2,     3,     1
 };
 
 
@@ -1241,43 +1270,79 @@ yyreduce:
   switch (yyn)
     {
         case 5:
-#line 30 "/Users/ocean/Documents/projects/workspace/tools/yas/src/bison/parser.y" /* yacc.c:1661  */
+#line 36 "/Users/ocean/Documents/projects/workspace/tools/yas/src/bison/parser.y" /* yacc.c:1661  */
     {printf("exp Found\n");}
-#line 1247 "/Users/ocean/Documents/projects/workspace/tools/yas/src/parser.cpp" /* yacc.c:1661  */
+#line 1276 "/Users/ocean/Documents/projects/workspace/tools/yas/src/parser.cpp" /* yacc.c:1661  */
     break;
 
   case 6:
-#line 31 "/Users/ocean/Documents/projects/workspace/tools/yas/src/bison/parser.y" /* yacc.c:1661  */
-    {printf("var Found\n");}
-#line 1253 "/Users/ocean/Documents/projects/workspace/tools/yas/src/parser.cpp" /* yacc.c:1661  */
+#line 37 "/Users/ocean/Documents/projects/workspace/tools/yas/src/bison/parser.y" /* yacc.c:1661  */
+    {printf("assign Found\n");}
+#line 1282 "/Users/ocean/Documents/projects/workspace/tools/yas/src/parser.cpp" /* yacc.c:1661  */
     break;
 
   case 7:
-#line 32 "/Users/ocean/Documents/projects/workspace/tools/yas/src/bison/parser.y" /* yacc.c:1661  */
-    {printf("assign Found\n");}
-#line 1259 "/Users/ocean/Documents/projects/workspace/tools/yas/src/parser.cpp" /* yacc.c:1661  */
+#line 38 "/Users/ocean/Documents/projects/workspace/tools/yas/src/bison/parser.y" /* yacc.c:1661  */
+    {printf("if Found\n");}
+#line 1288 "/Users/ocean/Documents/projects/workspace/tools/yas/src/parser.cpp" /* yacc.c:1661  */
     break;
 
-  case 8:
-#line 33 "/Users/ocean/Documents/projects/workspace/tools/yas/src/bison/parser.y" /* yacc.c:1661  */
-    {printf("if Found\n");}
-#line 1265 "/Users/ocean/Documents/projects/workspace/tools/yas/src/parser.cpp" /* yacc.c:1661  */
+  case 10:
+#line 43 "/Users/ocean/Documents/projects/workspace/tools/yas/src/bison/parser.y" /* yacc.c:1661  */
+    {printf("Numeral Found: %.f\n",(yyvsp[0].fval));}
+#line 1294 "/Users/ocean/Documents/projects/workspace/tools/yas/src/parser.cpp" /* yacc.c:1661  */
     break;
 
   case 11:
-#line 38 "/Users/ocean/Documents/projects/workspace/tools/yas/src/bison/parser.y" /* yacc.c:1661  */
-    {printf("Numeral Found\n");}
-#line 1271 "/Users/ocean/Documents/projects/workspace/tools/yas/src/parser.cpp" /* yacc.c:1661  */
+#line 44 "/Users/ocean/Documents/projects/workspace/tools/yas/src/bison/parser.y" /* yacc.c:1661  */
+    {printf("LiteralString Found\n");}
+#line 1300 "/Users/ocean/Documents/projects/workspace/tools/yas/src/parser.cpp" /* yacc.c:1661  */
     break;
 
   case 12:
-#line 39 "/Users/ocean/Documents/projects/workspace/tools/yas/src/bison/parser.y" /* yacc.c:1661  */
-    {printf("LiteralString Found\n");}
-#line 1277 "/Users/ocean/Documents/projects/workspace/tools/yas/src/parser.cpp" /* yacc.c:1661  */
+#line 45 "/Users/ocean/Documents/projects/workspace/tools/yas/src/bison/parser.y" /* yacc.c:1661  */
+    {printf("Var in exp Found\n");}
+#line 1306 "/Users/ocean/Documents/projects/workspace/tools/yas/src/parser.cpp" /* yacc.c:1661  */
+    break;
+
+  case 13:
+#line 46 "/Users/ocean/Documents/projects/workspace/tools/yas/src/bison/parser.y" /* yacc.c:1661  */
+    {printf("Add found\n");}
+#line 1312 "/Users/ocean/Documents/projects/workspace/tools/yas/src/parser.cpp" /* yacc.c:1661  */
+    break;
+
+  case 14:
+#line 47 "/Users/ocean/Documents/projects/workspace/tools/yas/src/bison/parser.y" /* yacc.c:1661  */
+    {printf("Sub found\n");}
+#line 1318 "/Users/ocean/Documents/projects/workspace/tools/yas/src/parser.cpp" /* yacc.c:1661  */
+    break;
+
+  case 15:
+#line 48 "/Users/ocean/Documents/projects/workspace/tools/yas/src/bison/parser.y" /* yacc.c:1661  */
+    {printf("Mul found\n");}
+#line 1324 "/Users/ocean/Documents/projects/workspace/tools/yas/src/parser.cpp" /* yacc.c:1661  */
+    break;
+
+  case 16:
+#line 49 "/Users/ocean/Documents/projects/workspace/tools/yas/src/bison/parser.y" /* yacc.c:1661  */
+    {printf("Div found\n");}
+#line 1330 "/Users/ocean/Documents/projects/workspace/tools/yas/src/parser.cpp" /* yacc.c:1661  */
+    break;
+
+  case 17:
+#line 50 "/Users/ocean/Documents/projects/workspace/tools/yas/src/bison/parser.y" /* yacc.c:1661  */
+    {printf("NEG found\n");}
+#line 1336 "/Users/ocean/Documents/projects/workspace/tools/yas/src/parser.cpp" /* yacc.c:1661  */
+    break;
+
+  case 18:
+#line 51 "/Users/ocean/Documents/projects/workspace/tools/yas/src/bison/parser.y" /* yacc.c:1661  */
+    {printf("BRACE found\n");}
+#line 1342 "/Users/ocean/Documents/projects/workspace/tools/yas/src/parser.cpp" /* yacc.c:1661  */
     break;
 
 
-#line 1281 "/Users/ocean/Documents/projects/workspace/tools/yas/src/parser.cpp" /* yacc.c:1661  */
+#line 1346 "/Users/ocean/Documents/projects/workspace/tools/yas/src/parser.cpp" /* yacc.c:1661  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1505,7 +1570,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 55 "/Users/ocean/Documents/projects/workspace/tools/yas/src/bison/parser.y" /* yacc.c:1906  */
+#line 58 "/Users/ocean/Documents/projects/workspace/tools/yas/src/bison/parser.y" /* yacc.c:1906  */
 
 
 int main(int argc,char** argv)

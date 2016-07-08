@@ -12,10 +12,16 @@
 	char* 	sval;
 }
 
-%token <sval> IF Then End False True EQ
+%token IF Then End False True EQ SEM Add Sub Mul Div
+%token LB RB
 %token <fval> Numeral
 %token <sval> Name LiteralString
 
+%left EQ
+%left Add Sub
+%left Mul Div
+%precedence NEG
+%precedence BRACE
 %%
 
 chunk:
@@ -27,30 +33,27 @@ block:
 	;
 	
 stat:
-	exp                         {printf("exp Found\n");}
-    |var                        {printf("var Found\n");}
-    |var EQ exp                 {printf("assign Found\n");}
+	exp SEM                         {printf("exp Found\n");}
+    |var EQ exp SEM                 {printf("assign Found\n");}
 	|IF exp Then block End      {printf("if Found\n");}
 
 exp:
 	False
 	|True
-	|Numeral            {printf("Numeral Found\n");}
+	|Numeral            {printf("Numeral Found: %.f\n",$1);}
 	|LiteralString      {printf("LiteralString Found\n");}
-	|exp binop exp
-	|unop exp
+	|var 				{printf("Var in exp Found\n");}
+	|exp Add exp		{printf("Add found\n");}
+	|exp Sub exp		{printf("Sub found\n");}
+	|exp Mul exp		{printf("Mul found\n");}
+	|exp Div exp		{printf("Div found\n");}
+	|Sub exp %prec NEG		{printf("NEG found\n");}
+	|LB exp RB %prec BRACE   {printf("BRACE found\n");}
 	
 var:
     Name    
 
-binop:
-	'+'
-	|'-'
-	|'*'
-	|'/'
 	
-unop:
-	'-'
 
 %%
 
