@@ -15,6 +15,7 @@
 {
     [self statisticsForClass:[NSObject class]];
     [self statisticsForClass:[UIView class]];
+    [self statisticsForClass:[UITableView class]];
 }
 
 + (void)statisticsForClass:(Class)cls
