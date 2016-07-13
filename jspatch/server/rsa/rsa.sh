@@ -1,1 +1,0 @@
-ssh-keygen -b 1024 -t rsa -f id_rsa -P ""
