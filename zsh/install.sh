@@ -1,4 +1,4 @@
 #!/bin/zsh
-cp -r ./* /Users/ocean/.oh-my-zsh/custom/
+cp -r ./* $ZSH/custom/
 . ~/.zshrc
 echo 'install complete!'

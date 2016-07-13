@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "JPEngine.h"
 
 @interface AppDelegate ()
 
@@ -16,6 +17,12 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    
+    [JPEngine startEngine];
+    
+    NSString* patchFilePatch = [[NSBundle mainBundle] pathForResource:@"patch_01" ofType:@".js"];
+    NSString* patchContent = [NSString stringWithContentsOfFile:patchFilePatch encoding:NSUTF8StringEncoding error:nil];
+    [JPEngine evaluateScript:patchContent];
     // Override point for customization after application launch.
     return YES;
 }

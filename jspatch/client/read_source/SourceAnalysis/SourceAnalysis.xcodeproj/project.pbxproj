@@ -15,6 +15,7 @@
 		8E6749051D34DA2E0062C5AF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E6749031D34DA2E0062C5AF /* LaunchScreen.storyboard */; };
 		8E6749101D34DA870062C5AF /* JPEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E67490E1D34DA870062C5AF /* JPEngine.m */; };
 		8E6749111D34DA870062C5AF /* JSPatch.js in Resources */ = {isa = PBXBuildFile; fileRef = 8E67490F1D34DA870062C5AF /* JSPatch.js */; };
+		D3D5867E1D368C6E007719CD /* patch_01.js in Resources */ = {isa = PBXBuildFile; fileRef = D3D5867D1D368C6E007719CD /* patch_01.js */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +32,7 @@
 		8E67490D1D34DA870062C5AF /* JPEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPEngine.h; sourceTree = "<group>"; };
 		8E67490E1D34DA870062C5AF /* JPEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPEngine.m; sourceTree = "<group>"; };
 		8E67490F1D34DA870062C5AF /* JSPatch.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = JSPatch.js; sourceTree = "<group>"; };
+		D3D5867D1D368C6E007719CD /* patch_01.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = patch_01.js; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +65,7 @@
 		8E6748F41D34DA2E0062C5AF /* SourceAnalysis */ = {
 			isa = PBXGroup;
 			children = (
+				D3D5867C1D3682C4007719CD /* pacthes */,
 				8E67490C1D34DA870062C5AF /* jspatch */,
 				8E6748F81D34DA2E0062C5AF /* AppDelegate.h */,
 				8E6748F91D34DA2E0062C5AF /* AppDelegate.m */,
@@ -93,6 +96,14 @@
 				8E67490F1D34DA870062C5AF /* JSPatch.js */,
 			);
 			path = jspatch;
+			sourceTree = "<group>";
+		};
+		D3D5867C1D3682C4007719CD /* pacthes */ = {
+			isa = PBXGroup;
+			children = (
+				D3D5867D1D368C6E007719CD /* patch_01.js */,
+			);
+			name = pacthes;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -152,6 +163,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D3D5867E1D368C6E007719CD /* patch_01.js in Resources */,
 				8E6749051D34DA2E0062C5AF /* LaunchScreen.storyboard in Resources */,
 				8E6749021D34DA2E0062C5AF /* Assets.xcassets in Resources */,
 				8E6749111D34DA870062C5AF /* JSPatch.js in Resources */,
@@ -318,6 +330,7 @@
 				8E67490B1D34DA2E0062C5AF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
