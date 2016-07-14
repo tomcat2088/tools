@@ -1,9 +1,12 @@
 require('NSString')
-// demo.js
+
 defineClass('AppDelegate', {
-            // replace the -genView method
             bugFunc: function() {
-            _OC_log("bug fixed app delegate");
+            _OC_log("bug fixed in app delegate");
+            }
+            bugFuncWithArg:function()
+            {
+             _OC_log("bug with arg fixed in app delegate");
             }
             });
 

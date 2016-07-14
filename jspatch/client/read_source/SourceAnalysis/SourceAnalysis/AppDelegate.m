@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "jspatch/JPEngine.h"
 #import "BugCls.h"
+#import <objc/runtime.h>
 
 @interface AppDelegate ()
 
@@ -29,13 +30,37 @@
     // Override point for customization after application launch.
     [self runJSPatch];
     
+    Method bugFuncMethod = class_getInstanceMethod([AppDelegate class],@selector(bugFuncWithArg:));
+    
+    class_replaceMethod([AppDelegate class], @selector(bugFuncWithArg:), (IMP)bugFuncReplace, method_getTypeEncoding(bugFuncMethod));
+    
+    [self bugFuncWithArg:@"arg"];
+    
+    [self bugFunc];
+    
     [[BugCls shared] bug];
     [[BugCls shared] bug1:@"bug1 here"];
     [[BugCls shared] bug2:@"bug2 here" arg:@"arg1"];
     
     CGRect rect = [[BugCls shared] bug3:@"3,3,3,3"];
     NSLog(@"%f,%f,%f,%f",rect.origin.x,rect.origin.y,rect.size.width,rect.size.height);
+    
     return YES;
+}
+
+static void bugFuncReplace(id slf,SEL cmd)
+{
+}
+
+
+- (void)bugFuncWithArg:(NSString*)msg
+{
+    NSLog(@"bug func");
+}
+
+- (void)bugFunc
+{
+    NSLog(@"bug func");
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

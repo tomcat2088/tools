@@ -16,9 +16,20 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         _shared = [BugCls new];
+        //va_list_test(_shared,2,4,5);
     });
     return _shared;
 }
+
+//static void va_list_test(id slf , ...)
+//{
+//    va_list args;
+//    va_start(args, slf);
+//    int a = va_arg(args, int);
+//    int b = va_arg(args, int);
+//    int c = va_arg(args, int);
+//    va_end(args);
+//}
 
 - (void)bug
 {

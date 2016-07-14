@@ -896,7 +896,7 @@ static void overrideMethod(Class cls, NSString *selectorName, JSValue *function,
         }
     }
     
-    //将补丁方法实现定向到 _JP原有方法名 的 selector下，并且缓存起来
+    //添加 _JP原有方法名 的 selector，也指向msgForwardIMP 并且缓存起来
     NSString *JPSelectorName = [NSString stringWithFormat:@"_JP%@", selectorName];
     SEL JPSelector = NSSelectorFromString(JPSelectorName);
 
@@ -970,6 +970,8 @@ static id callSelector(NSString *className, NSString *selectorName, JSValue *arg
     if (!_JSMethodSignatureCache) {
         _JSMethodSignatureCache = [[NSMutableDictionary alloc]init];
     }
+    
+    //生成NSInvocation
     if (instance) {
         //如果是实例方法，就从cls对应的方法签名缓存中查找?
         [_JSMethodSignatureLock lock];
@@ -1124,7 +1126,7 @@ static id callSelector(NSString *className, NSString *selectorName, JSValue *arg
     }
     
     [invocation invoke];
-    //_TMPMemoryPool 解决非OC指针内存管理问题
+    //_TMPMemoryPool 解决非OC指针内存管理问题  ？？？？
     if ([_markArray count] > 0) {
         for (JPBoxing *box in _markArray) {
             void *pointer = [box unboxPointer];
@@ -1148,7 +1150,7 @@ static id callSelector(NSString *className, NSString *selectorName, JSValue *arg
             //For performance, ignore the other methods prefix with alloc/new/copy/mutableCopy
             if ([selectorName isEqualToString:@"alloc"] || [selectorName isEqualToString:@"new"] ||
                 [selectorName isEqualToString:@"copy"] || [selectorName isEqualToString:@"mutableCopy"]) {
-                returnValue = (__bridge_transfer id)result;
+                returnValue = (__bridge_transfer id)result;//去引用bridge，非显式调用copy,new,alloc,mutableCopy,ARC会认为是普通调用，returnValue的持有，会使retainCount再加1，这样result的引用计数就是2，会导致内存泄漏
             } else {
                 returnValue = (__bridge id)result;
             }
