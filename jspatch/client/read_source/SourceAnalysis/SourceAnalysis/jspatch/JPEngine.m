@@ -549,7 +549,7 @@ static JSValue* getJSFunctionInObjectHierachy(id slf, NSString *selectorName)
 static void JPForwardInvocation(__unsafe_unretained id assignSlf, SEL selector, NSInvocation *invocation)
 {
     BOOL deallocFlag = NO;
-    id slf = assignSlf;
+    id slf = assignSlf;//__strong
     NSMethodSignature *methodSignature = [invocation methodSignature];
     NSInteger numberOfArguments = [methodSignature numberOfArguments];
     
@@ -557,6 +557,7 @@ static void JPForwardInvocation(__unsafe_unretained id assignSlf, SEL selector, 
     NSString *JPSelectorName = [NSString stringWithFormat:@"_JP%@", selectorName];
     SEL JPSelector = NSSelectorFromString(JPSelectorName);
     
+    //如果没有找到 _JP原selector名 的方法，就调用该类原有的ForwardInvocation
     if (!class_respondsToSelector(object_getClass(slf), JPSelector)) {
         JPExcuteORIGForwardInvocation(slf, selector, invocation);
         return;
@@ -564,6 +565,7 @@ static void JPForwardInvocation(__unsafe_unretained id assignSlf, SEL selector, 
     
     NSMutableArray *argList = [[NSMutableArray alloc] init];
     if ([slf class] == slf) {
+        //如果slf是class，说明是类方法调用，第一个参数设置为该class
         [argList addObject:[JSValue valueWithObject:@{@"__clsName": NSStringFromClass([slf class])} inContext:_context]];
     } else if ([selectorName isEqualToString:@"dealloc"]) {
         [argList addObject:[JPBoxing boxAssignObj:slf]];
@@ -572,6 +574,7 @@ static void JPForwardInvocation(__unsafe_unretained id assignSlf, SEL selector, 
         [argList addObject:[JPBoxing boxWeakObj:slf]];
     }
     
+    //第一个参数是self，第二个是cmd，都跳过从第二个开始，读取后面的参数
     for (NSUInteger i = 2; i < numberOfArguments; i++) {
         const char *argumentType = [methodSignature getArgumentTypeAtIndex:i];
         switch(argumentType[0] == 'r' ? argumentType[1] : argumentType[0]) {
@@ -664,9 +667,13 @@ static void JPForwardInvocation(__unsafe_unretained id assignSlf, SEL selector, 
         }
     }
     
+    //将参数列表转为js能够处理的类型，传递给js的方法
     NSArray *params = _formatOCToJSList(argList);
     const char *returnType = [methodSignature methodReturnType];
 
+    //处理被const (r)修饰的情况
+    
+    //如果调用的jsfunc的__isPerformInOC为true，使用callSelector直接在oc中调用
     switch (returnType[0] == 'r' ? returnType[1] : returnType[0]) {
         #define JP_FWD_RET_CALL_JS \
             JSValue *fun = getJSFunctionInObjectHierachy(slf, JPSelectorName); \
@@ -924,7 +931,7 @@ static id callSelector(NSString *className, NSString *selectorName, JSValue *arg
     Class cls = instance ? [instance class] : NSClassFromString(className);
     SEL selector = NSSelectorFromString(selectorName);
     
-    //对super调用特别处理
+    //对super调用特别处理，将父类的方法找出来，加上前缀SUPER_,给子类加上该方法
     if (isSuper) {
         NSString *superSelectorName = [NSString stringWithFormat:@"SUPER_%@", selectorName];
         SEL superSelector = NSSelectorFromString(superSelectorName);
@@ -945,6 +952,7 @@ static id callSelector(NSString *className, NSString *selectorName, JSValue *arg
         
         class_addMethod(cls, superSelector, superIMP, method_getTypeEncoding(superMethod));
         
+        //如果发现父类的该方法也被改写，那么就override这个新加的方法
         NSString *JPSelectorName = [NSString stringWithFormat:@"_JP%@", selectorName];
         JSValue *overideFunction = _JSOverideMethods[superCls][JPSelectorName];
         if (overideFunction) {
@@ -963,6 +971,7 @@ static id callSelector(NSString *className, NSString *selectorName, JSValue *arg
         _JSMethodSignatureCache = [[NSMutableDictionary alloc]init];
     }
     if (instance) {
+        //如果是实例方法，就从cls对应的方法签名缓存中查找?
         [_JSMethodSignatureLock lock];
         if (!_JSMethodSignatureCache[cls]) {
             _JSMethodSignatureCache[(id<NSCopying>)cls] = [[NSMutableDictionary alloc]init];
@@ -990,6 +999,7 @@ static id callSelector(NSString *className, NSString *selectorName, JSValue *arg
     }
     [invocation setSelector:selector];
     
+    //处理可变参数的调用
     NSUInteger numberOfArguments = methodSignature.numberOfArguments;
     NSInteger inputArguments = [(NSArray *)argumentsObj count];
     if (inputArguments > numberOfArguments - 2) {
@@ -999,9 +1009,13 @@ static id callSelector(NSString *className, NSString *selectorName, JSValue *arg
         return formatOCToJS(result);
     }
     
+    //https://developer.apple.com/library/ios/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtTypeEncodings.html
+    //iOS type encoding
     for (NSUInteger i = 2; i < numberOfArguments; i++) {
         const char *argumentType = [methodSignature getArgumentTypeAtIndex:i];
         id valObj = argumentsObj[i-2];
+        //如果第一个参数为const (r) 就取第二个类型
+        //一
         switch (argumentType[0] == 'r' ? argumentType[1] : argumentType[0]) {
                 
                 #define JP_CALL_ARG_CASE(_typeString, _type, _selector) \
@@ -1025,7 +1039,7 @@ static id callSelector(NSString *className, NSString *selectorName, JSValue *arg
                 JP_CALL_ARG_CASE('d', double, doubleValue)
                 JP_CALL_ARG_CASE('B', BOOL, boolValue)
                 
-            case ':': {
+            case ':': { //selector
                 SEL value = nil;
                 if (valObj != _nilObj) {
                     value = NSSelectorFromString(valObj);
@@ -1033,7 +1047,7 @@ static id callSelector(NSString *className, NSString *selectorName, JSValue *arg
                 [invocation setArgument:&value atIndex:i];
                 break;
             }
-            case '{': {
+            case '{': { //struct => {example=@*i}
                 NSString *typeString = extractStructName([NSString stringWithUTF8String:argumentType]);
                 JSValue *val = arguments[i-2];
                 #define JP_CALL_ARG_STRUCT(_type, _methodName) \
@@ -1060,8 +1074,8 @@ static id callSelector(NSString *className, NSString *selectorName, JSValue *arg
                 
                 break;
             }
-            case '*':
-            case '^': {
+            case '*'://char
+            case '^': { //pointer ^type
                 if ([valObj isKindOfClass:[JPBoxing class]]) {
                     void *value = [((JPBoxing *)valObj) unboxPointer];
                     
@@ -1080,7 +1094,7 @@ static id callSelector(NSString *className, NSString *selectorName, JSValue *arg
                     break;
                 }
             }
-            case '#': {
+            case '#': {//class object
                 if ([valObj isKindOfClass:[JPBoxing class]]) {
                     Class value = [((JPBoxing *)valObj) unboxClass];
                     [invocation setArgument:&value atIndex:i];
@@ -1110,6 +1124,7 @@ static id callSelector(NSString *className, NSString *selectorName, JSValue *arg
     }
     
     [invocation invoke];
+    //_TMPMemoryPool 解决非OC指针内存管理问题
     if ([_markArray count] > 0) {
         for (JPBoxing *box in _markArray) {
             void *pointer = [box unboxPointer];
@@ -1121,6 +1136,8 @@ static id callSelector(NSString *className, NSString *selectorName, JSValue *arg
             }
         }
     }
+    
+    //对返回值进行处理
     const char *returnType = [methodSignature methodReturnType];
     id returnValue;
     if (strncmp(returnType, "v", 1) != 0) {

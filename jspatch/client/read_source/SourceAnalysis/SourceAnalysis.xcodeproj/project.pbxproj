@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8E1BA4D41D379C2F00AD2625 /* patch_01.js in Resources */ = {isa = PBXBuildFile; fileRef = 8E1BA4D31D379C2F00AD2625 /* patch_01.js */; };
+		8E1BA4D71D379C8B00AD2625 /* BugCls.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E1BA4D61D379C8B00AD2625 /* BugCls.m */; };
 		8E6748F71D34DA2E0062C5AF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E6748F61D34DA2E0062C5AF /* main.m */; };
 		8E6748FA1D34DA2E0062C5AF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E6748F91D34DA2E0062C5AF /* AppDelegate.m */; };
 		8E6748FD1D34DA2E0062C5AF /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E6748FC1D34DA2E0062C5AF /* ViewController.m */; };
@@ -18,6 +20,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8E1BA4D31D379C2F00AD2625 /* patch_01.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = patch_01.js; sourceTree = "<group>"; };
+		8E1BA4D51D379C8B00AD2625 /* BugCls.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BugCls.h; sourceTree = "<group>"; };
+		8E1BA4D61D379C8B00AD2625 /* BugCls.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BugCls.m; sourceTree = "<group>"; };
 		8E6748F21D34DA2E0062C5AF /* SourceAnalysis.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SourceAnalysis.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E6748F61D34DA2E0062C5AF /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		8E6748F81D34DA2E0062C5AF /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -44,6 +49,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8E1BA4D21D379C1600AD2625 /* patches */ = {
+			isa = PBXGroup;
+			children = (
+				8E1BA4D31D379C2F00AD2625 /* patch_01.js */,
+			);
+			name = patches;
+			sourceTree = "<group>";
+		};
 		8E6748E91D34DA2E0062C5AF = {
 			isa = PBXGroup;
 			children = (
@@ -63,6 +76,9 @@
 		8E6748F41D34DA2E0062C5AF /* SourceAnalysis */ = {
 			isa = PBXGroup;
 			children = (
+				8E1BA4D51D379C8B00AD2625 /* BugCls.h */,
+				8E1BA4D61D379C8B00AD2625 /* BugCls.m */,
+				8E1BA4D21D379C1600AD2625 /* patches */,
 				8E67490C1D34DA870062C5AF /* jspatch */,
 				8E6748F81D34DA2E0062C5AF /* AppDelegate.h */,
 				8E6748F91D34DA2E0062C5AF /* AppDelegate.m */,
@@ -155,6 +171,7 @@
 				8E6749051D34DA2E0062C5AF /* LaunchScreen.storyboard in Resources */,
 				8E6749021D34DA2E0062C5AF /* Assets.xcassets in Resources */,
 				8E6749111D34DA870062C5AF /* JSPatch.js in Resources */,
+				8E1BA4D41D379C2F00AD2625 /* patch_01.js in Resources */,
 				8E6749001D34DA2E0062C5AF /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -170,6 +187,7 @@
 				8E6749101D34DA870062C5AF /* JPEngine.m in Sources */,
 				8E6748FA1D34DA2E0062C5AF /* AppDelegate.m in Sources */,
 				8E6748F71D34DA2E0062C5AF /* main.m in Sources */,
+				8E1BA4D71D379C8B00AD2625 /* BugCls.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -318,6 +336,7 @@
 				8E67490B1D34DA2E0062C5AF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
