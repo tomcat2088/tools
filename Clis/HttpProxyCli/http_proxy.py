@@ -10,7 +10,7 @@ class ProxyClient(proxy.ProxyClient):
 
     def handleHeader(self, key, value):
         # change response header here
-        #print("Header: %s: %s" % (key, value))
+        print("Header: %s: %s" % (key, value))
         proxy.ProxyClient.handleHeader(self, key, value)
 
     def handleResponsePart(self, buffer):
@@ -21,24 +21,45 @@ class ProxyClient(proxy.ProxyClient):
 
 class ProxyClientFactory(proxy.ProxyClientFactory):
     protocol = ProxyClient
-
+    def getStr():
+        return "dasd"
     def buildProtocol(self, addr):
-        print(str(addr))
+        print(str(self))
+        print(str(self.forProtocol))
         return proxy.ProxyClientFactory.buildProtocol(self,addr)
 
 class ProxyRequest(proxy.ProxyRequest):
     protocols = dict()
     protocols[b'http'] = ProxyClientFactory
+    def process(self):
+        parsed = urllib_parse.urlparse(self.uri)
+        protocol = parsed[0]
+        host = parsed[1].decode('ascii')
+        port = self.ports[protocol]
+        if ':' in host:
+            host, port = host.split(':')
+            port = int(port)
+        rest = urllib_parse.urlunparse((b'', b'') + parsed[2:])
+        if not rest:
+            rest = rest + b'/'
+        class_ = self.protocols[protocol]
+        headers = self.getAllHeaders().copy()
+        if b'host' not in headers:
+            headers[b'host'] = host.encode('ascii')
+        self.content.seek(0, 0)
+        s = self.content.read()
+        clientFactory = class_(self.method, rest, self.clientproto, headers,
+                               s, self)
+        self.reactor.connectTCP(host, port, clientFactory)
+    # def requestReceived(self, command, path, version):
+    #     #print(str(command))
+    #     #print(str(path))
+    #     packetID = HttpProxy.shared().didRecvRequest(None)
+    #     proxy.ProxyRequest.requestReceived(self,command,path,version)
 
-    def requestReceived(self, command, path, version):
-        #print(str(command))
-        #print(str(path))
-        packetID = HttpProxy.shared().didRecvRequest(None)
-        proxy.ProxyRequest.requestReceived(self,command,path,version)
-
-    def handleContentChunk(self, data):
-        print(str(data))
-        proxy.ProxyRequest.handleContentChunk(self,data)
+    # def handleContentChunk(self, data):
+    #     print(str(data))
+    #     proxy.ProxyRequest.handleContentChunk(self,data)
 
 class Proxy(proxy.Proxy):
     requestFactory = ProxyRequest
