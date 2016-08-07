@@ -4,6 +4,7 @@ from twisted.internet import reactor
 from datetime import datetime
 from packets_manager import PacketsManager
 import logger
+from io import BytesIO
 
 class ProxyClient(proxy.ProxyClient):
 
@@ -12,12 +13,31 @@ class ProxyClient(proxy.ProxyClient):
         self.packet = PacketsManager.addPacket()
         self.packet.method = command
         self.packet.url = rest
-        self.packet.requestHeaders = headers
+        self.packet.requestHeaders = self.parseBinaryDict(headers)
         self.packet.requestData = data
+        self.packet.responseData = BytesIO()
+    def handleResponsePart(self, buffer):
+        self.packet.responseData.write(buffer)
+        proxy.ProxyClient.handleResponsePart(self,buffer)
     def handleResponseEnd(self):
-        self.packet.responseHeaders = self.father.responseHeaders
-        proxy.ProxyClient.handleResponseEnd(self)
-        self.packet.log()
+        if not self._finished:
+            self.packet.responseData.seek(0)
+            self.packet.responseData = self.packet.responseData.read()
+            self.packet.responseHeaders = self.parseBinaryDict(self.father.responseHeaders._rawHeaders)
+            self.packet.save()
+            proxy.ProxyClient.handleResponseEnd(self)
+
+    def parseBinaryDict(self,binaryDict):
+        strDict = dict()
+        for key in binaryDict:
+            if type(binaryDict[key]) is list:
+                listStr = ""
+                for item in binaryDict[key]:
+                    listStr += str(item,'utf-8')
+                strDict[str(key,'utf-8')] = listStr
+            elif type(binaryDict[key]) is bytes:
+                strDict[str(key,'utf-8')] = str(binaryDict[key],'utf-8')
+        return strDict
 
 
 class ProxyClientFactory(proxy.ProxyClientFactory):

@@ -1,9 +1,12 @@
 import sqlite3 as sl
 import logger
+from datetime import datetime
+import os
 
 class SqlBuilder:
     def __init__(self):
         self.sqlLists = []
+        self.values = ()
     def build(self):
         spliter = ' '
         return spliter.join(self.sqlLists)
@@ -20,8 +23,12 @@ class SqlBuilder:
         for val in vals:
             processedVals.append(str.format(r"'{0}'",val))
         spliter = ','
-        sql = str.format('insert into {0} ({1}) values({2})',tableName,spliter.join(cols),spliter.join(processedVals))
+        valuePlaceHolders = []
+        for col in cols:
+            valuePlaceHolders.append('?')
+        sql = str.format('insert into {0} ({1}) values({2})',tableName,spliter.join(cols),spliter.join(valuePlaceHolders))
         self.sqlLists.append(sql)
+        self.values = vals
         return self
 
     def where(self,conditionDict = None):
@@ -62,9 +69,13 @@ class DataStorage:
     DataTypeInt = 'INTEGER'
     DataTypeReal = 'REAL'
     DataTypeBlob = 'BLOB'
-
+    defaultStorage = None
     def default():
-        return DataStorage('today.db')
+        if DataStorage.defaultStorage == None:
+            if os.path.exists('db') == False:
+                os.mkdir('db')
+            DataStorage.defaultStorage = DataStorage('./db/' + datetime.now().strftime('%Y%m%d') + ".db")
+        return DataStorage.defaultStorage
 
     def __init__(self,dbname):
         self.connection = sl.connect(dbname)
@@ -83,7 +94,7 @@ class DataStorage:
             colStrs.append(str.format('{0} {1}',col,attrs[index]))
             index = index + 1
         spliter = ','
-        sql = str.format('create table {0} ({1})',name,spliter.join(colStrs))
+        sql = str.format('create table if not exists {0} ({1})',name,spliter.join(colStrs))
         cur = self.connection.cursor()
         cur.execute(sql)
         self.connection.commit()
@@ -94,13 +105,13 @@ class DataStorage:
         return DataStorageResult(cur)
     def execute(self,sqlBuilder):
         cur = self.connection.cursor()
-        cur.execute(sqlBuilder.build())
+        cur.execute(sqlBuilder.build(),sqlBuilder.values)
         self.connection.commit()
 
 if __name__ == "__main__":
     print("load from main")
-    dataStorage = DataStorage('test2.db')
-    dataStorage.execute(SqlBuilder().insert('http',['method','url'],['POST','http://url']))
+    dataStorage = DataStorage('test.db')
+    dataStorage.execute(SqlBuilder().insert('http',['method','url'],(b'POST','http://url')))
     builder = SqlBuilder().select('http',[]).where()
     result = dataStorage.query(builder)
     print(result.all())
