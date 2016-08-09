@@ -2,6 +2,7 @@ import logger
 from datetime import datetime
 from data_storage import *
 import json
+from termcolor import colored
 
 class HttpPacket:
     def __init__(self):
@@ -13,7 +14,11 @@ class HttpPacket:
         self.responseHeaders = {}
         self.responseData = b''
     def log(self):
-        output = str.format('{0} {1} {2} {3}...',str(datetime.today()),self.method,self.url,str(self.responseData,'utf-8')[0:20])
+        timeStr = colored(str(datetime.today().strftime('%m-%d %H:%M:%S')),'yellow')
+        methodStr = colored(self.method,'cyan')
+        urlStr = colored(self.url,'blue')
+        respStr = colored( str.format('{0} bytes recv',len(self.responseData)),'white')
+        output = str.format('{0} {1} {2} {3}',timeStr,methodStr,urlStr,respStr)
         print(output)
     def save(self):
         self.url = 'http://'+self.requestHeaders['host'] + str(self.url,'utf-8')
