@@ -9,16 +9,18 @@ class HttpPacket:
         now = datetime.utcnow()
         utcsecs = (now - datetime(1970, 1, 1)).total_seconds()
         self.id = str(int(utcsecs * 1000000))
+        self.requestTime = 0
+        self.responseTime = 0
         self.requestHeaders = {}
         self.requestData = b''
         self.responseHeaders = {}
         self.responseData = b''
     def log(self):
-        timeStr = colored(str(datetime.today().strftime('%m-%d %H:%M:%S')),'yellow')
+        timeStr = colored(str(self.requestTime.strftime('%m-%d %H:%M:%S')),'yellow')
         methodStr = colored(self.method,'cyan')
         urlStr = colored(self.url,'blue')
-        respStr = colored( str.format('{0} bytes recv',len(self.responseData)),'white')
-        output = str.format('{0} {1} {2} {3}',timeStr,methodStr,urlStr,respStr)
+        respStr = colored( str.format('{0} bytes recv when {1}',len(self.responseData),str(self.responseTime.strftime('%m-%d %H:%M:%S'))),'white')
+        output = str.format('{0} {1} {2} {3} cost: {4} s',timeStr,methodStr,urlStr,respStr,(self.responseTime - self.requestTime).total_seconds())
         print(output)
     def save(self):
         self.url = 'http://'+self.requestHeaders['host'] + str(self.url,'utf-8')
@@ -26,12 +28,29 @@ class HttpPacket:
 
         dataStorage = DataStorage.default()
         tableName = 'http_traffics'
-        cols = ['id','method','url','req_headers','req_data','resp_headers','resp_data']
-        colsTypes = ['INTEGER PRIMARY KEY ASC',DataStorage.DataTypeText,DataStorage.DataTypeText,DataStorage.DataTypeText,DataStorage.DataTypeText,DataStorage.DataTypeText,DataStorage.DataTypeText]
+        cols = ['id','method','url','req_time','req_headers','req_data','resp_time','resp_headers','resp_data']
+        colsTypes = ['INTEGER PRIMARY KEY ASC',
+        DataStorage.DataTypeText,
+        DataStorage.DataTypeText,
+        DataStorage.DataTypeInt,
+        DataStorage.DataTypeText,
+        DataStorage.DataTypeText,
+        DataStorage.DataTypeInt,
+        DataStorage.DataTypeText,
+        DataStorage.DataTypeText]
+
         dataStorage.schemaCreate(tableName,cols,colsTypes)
 
-        insertCols = ['method','url','req_headers','req_data','resp_headers','resp_data']
-        values = [self.method,self.url,json.dumps(self.requestHeaders),memoryview(self.requestData),json.dumps(self.responseHeaders),memoryview(self.responseData)]
+        insertCols = ['method','url','req_time','req_headers','req_data','resp_time','resp_headers','resp_data']
+        values = [self.method,
+        self.url,
+        self.requestTime,
+        json.dumps(self.requestHeaders),
+        memoryview(self.requestData),
+        self.responseTime,
+        json.dumps(self.responseHeaders),
+        memoryview(self.responseData)]
+
         dataStorage.execute(SqlBuilder().insert(tableName,insertCols,values))
 
         self.log()

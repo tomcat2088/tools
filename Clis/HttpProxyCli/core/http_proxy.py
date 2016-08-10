@@ -13,6 +13,7 @@ class ProxyClient(proxy.ProxyClient):
         self.packet = PacketsManager.addPacket()
         self.packet.method = command
         self.packet.url = rest
+        self.packet.requestTime = datetime.now()
         self.packet.requestHeaders = self.parseBinaryDict(headers)
         self.packet.requestData = data
         self.packet.responseData = BytesIO()
@@ -21,6 +22,7 @@ class ProxyClient(proxy.ProxyClient):
         proxy.ProxyClient.handleResponsePart(self,buffer)
     def handleResponseEnd(self):
         if not self._finished:
+            self.packet.responseTime = datetime.now()
             self.packet.responseData.seek(0)
             self.packet.responseData = self.packet.responseData.read()
             self.packet.responseHeaders = self.parseBinaryDict(self.father.responseHeaders._rawHeaders)
