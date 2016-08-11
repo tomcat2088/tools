@@ -1,19 +1,40 @@
-logFields = ["req_time","url"]
-logFieldsColor = ["yellow","cyan"]
-logFieldsShowType = ["all","all"]
+from termcolor import colored
+import sys
+sys.path.append('..')
+from config.log import *
 
-#['id','method','url','req_time','req_headers','req_data','resp_time','resp_headers','resp_data']
+_filter = ""
+def setFilter(filter):
+    global _filter
+    _filter = filter
+
+def canBeShow(value):
+    global _filter
+    if _filter == "":
+        return True
+    if str(value).rfind(_filter) < 0:
+        return False
+    return True
+
 def logStr(fieldName,value):
-    funcMap = {"req_time":timeLogStr,
-    "req_headers":dictLogStr,
-    "req_data":binaryLogStr,
-    "resp_time":timeLogStr,
-    "resp_headers":dictLogStr,
-    "resp_data":binaryLogStr}
-    logStrFunc = funcMap[fieldName]
-    if logStrFunc:
-        logStrFunc(value,)
+    funcMap = {"requestTime":timeLogStr,
+    "requestHeaders":dictLogStr,
+    "requestData":binaryLogStr,
+    "responseTime":timeLogStr,
+    "responseHeaders":dictLogStr,
+    "responseData":binaryLogStr}
+    output = ''
+    if fieldName in funcMap:
+        logStrFunc = funcMap[fieldName]
+        if logStrFunc:
+            index = logFields.index(fieldName)
+            output = logStrFunc(value,logFieldsShowType[index])
+    else:
+        output = defaultLog(value,'')
 
+    index = logFields.index(fieldName)
+    output = colored(output,logFieldsColor[index])
+    return output
 
 def defaultLog(value,showType):
     return str(value)

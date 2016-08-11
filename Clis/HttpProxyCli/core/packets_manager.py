@@ -2,7 +2,7 @@ import logger
 from datetime import datetime
 from data_storage import *
 import json
-from termcolor import colored
+import packet_log_config
 
 class HttpPacket:
     def __init__(self):
@@ -16,12 +16,14 @@ class HttpPacket:
         self.responseHeaders = {}
         self.responseData = b''
     def log(self):
-        timeStr = colored(str(self.requestTime.strftime('%m-%d %H:%M:%S')),'yellow')
-        methodStr = colored(self.method,'cyan')
-        urlStr = colored(self.url,'blue')
-        respStr = colored( str.format('{0} bytes recv when {1}',len(self.responseData),str(self.responseTime.strftime('%m-%d %H:%M:%S'))),'white')
-        output = str.format('{0} {1} {2} {3} cost: {4} s',timeStr,methodStr,urlStr,respStr,(self.responseTime - self.requestTime).total_seconds())
-        print(output)
+        logStrs = []
+        for field in packet_log_config.logFields:
+            logStr = packet_log_config.logStr(field,eval(str.format("self.{0}",field)))
+            logStrs.append(logStr)
+        logInfo = " ".join(logStrs)
+        if packet_log_config.canBeShow(logInfo) == False:
+            return
+        print(" ".join(logStrs))
     def save(self):
         self.url = 'http://'+self.requestHeaders['host'] + str(self.url,'utf-8')
         self.method = str(self.method,'utf-8')

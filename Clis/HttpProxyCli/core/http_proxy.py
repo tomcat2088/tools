@@ -58,12 +58,11 @@ class ProxyFactory(http.HTTPFactory):
     protocol = Proxy
 
 class HttpProxy():
-    def __init__(self,host,port,dataCallback):
+    def __init__(self,host,port):
         self.isStarted = False
         self.httpPackets = {};
         self.host = host
         self.port = port
-        self.dataCallback = dataCallback
 
     def start(self):
         if self.isStarted == True:
