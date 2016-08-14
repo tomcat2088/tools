@@ -47,9 +47,23 @@ class ProxyClientFactory(proxy.ProxyClientFactory):
 
 class ProxyRequest(proxy.ProxyRequest):
     protocols = dict()
-    ports = dict()
     protocols[b'http'] = ProxyClientFactory
+    protocols[b'https'] = ProxyClientFactory
+    ports = dict()
     ports[b'http'] = 80
+    ports[b'https'] = 80
+    def __init__(self, channel, queued):
+        ports = dict()
+        ports[b'http'] = 80
+        ports[b'https'] = 80
+        self.ports = ports
+        proxy.ProxyRequest.__init__(self, channel, queued)
+
+    def process(self):
+        # 目前不支持https
+        if str(self.uri,'utf-8').rfind('http') < 0:
+            return
+        proxy.ProxyRequest.process(self)
 
 class Proxy(proxy.Proxy):
     requestFactory = ProxyRequest
