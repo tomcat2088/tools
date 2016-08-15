@@ -4,17 +4,30 @@ sys.path.append('..')
 from config.log import *
 
 _filter = ""
+def isMatchField():
+    return type(_filter) is dict
+
 def setFilter(filter):
     global _filter
     _filter = filter
 
-def canBeShow(value):
+def fieldMatch(value,fieldName):
     global _filter
-    if _filter == "":
+    if type(_filter) is dict:
+        if len(_filter) == 0 or (fieldName in _filter) == False:
+            return True
+    if type(_filter) is dict and fieldName in _filter :
+        if str(value).rfind(_filter[fieldName]) >= 0:
+            return True
+    return False
+
+def allTextMatch(value):
+    global _filter
+    if type(_filter) is str and _filter == "":
         return True
-    if str(value).rfind(_filter) < 0:
-        return False
-    return True
+    if type(_filter) is str and str(value).rfind(_filter) >= 0:
+        return True
+    return False
 
 def logStr(fieldName,value):
     funcMap = {"requestTime":timeLogStr,

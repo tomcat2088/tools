@@ -74,11 +74,16 @@ class DataStorage:
         if DataStorage.defaultStorage == None:
             if os.path.exists('db') == False:
                 os.mkdir('db')
-            DataStorage.defaultStorage = DataStorage('./db/' + datetime.now().strftime('%Y%m%d') + ".db")
+            DataStorage.defaultStorage = DataStorage(datetime.now().strftime('%Y%m%d') + ".db")
         return DataStorage.defaultStorage
 
+    def listDBs():
+        for file in os.listdir('./db/'):
+            print(file)
+
     def __init__(self,dbname):
-        self.connection = sl.connect(dbname)
+        self.connection = sl.connect('./db/' + dbname)
+        self.connection.row_factory = sl.Row
     '''
     Types:
     NULL. The value is a NULL value.
