@@ -76,16 +76,24 @@ class HttpPacket:
         dataStorage = DataStorage.default()
         if db != "":
             dataStorage = DataStorage(db)
-        print('=' * 40)
-        for row in dataStorage.query(SqlBuilder().select(tableName,fields)).all():
+        whereDict = dict()
+        for key in fields.keys():
+            if len(fields[key]) > 0:
+                whereDict[key + " like "] = fields[key]
+        builder = SqlBuilder().select(tableName,list(fields.keys())).where(whereDict)
+        rowNum = 1
+        for row in dataStorage.query(builder).all():
+            print('=' * 30 + ' Row <' + str(rowNum) + '> ' + '=' * 30)
+            if len(fields) == 0:
+                fields = row.keys()
             for field in fields:
                 logStr = ''
                 if type(row[field]) is bytes:
-                    logStr = str.format('{0} : {1}',colored(field,'cyan'),colored(str(row[field],'utf-8'),'white'))
+                    logStr = str.format('[{0}]\n{1}',colored(field,'cyan'),colored(str(row[field],'utf-8'),'white'))
                 else:
-                    logStr = str.format('{0} : {1}',colored(field,'cyan'),colored(str(row[field]),'white'))
+                    logStr = str.format('[{0}]\n{1}',colored(field,'cyan'),colored(str(row[field]),'white'))
                 print(logStr)
-            print('=' * 40)
+            rowNum += 1
 
 class PacketsManager:
     packets = dict()

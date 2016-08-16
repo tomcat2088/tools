@@ -35,9 +35,11 @@ class SqlBuilder:
         if conditionDict == None or len(conditionDict) == 0:
             return self
         sql = "where "
+        conditions = []
         for key in conditionDict:
             conditionStr = str.format('{0}\'{1}\' ',key,conditionDict[key])
-            sql += conditionStr
+            conditions.append(conditionStr)
+        sql += ' and '.join(conditions)
         self.sqlLists.append(sql)
         return self
 
