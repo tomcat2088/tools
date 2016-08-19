@@ -10,7 +10,7 @@ def main(argv):
     address = '127.0.0.1'
     port = 9999
     queryDB = ""
-    queryFields = []
+    queryFields = None
     usage = str.format('{0} -i <ip address> -p <port> -f <filter> -e <complex filter> -b <select db> -q <query fields> -l <list all dbs>',sys.argv[0])
     try:
         opts, args = getopt.getopt(argv,"hi:p:f:e:b:q:l",["help","filter=","address","port","complexFilter","listdb","queryFields","listAllDB"])
@@ -32,11 +32,11 @@ def main(argv):
         elif opt in ("-b"):
             queryDB = arg
         elif opt in ("-q"):
-            queryFields = arg.split(",")
+            queryFields = parseQueryFields(arg)
         elif opt in ("-l"):
             DataStorage.listDBs()
             sys.exit()
-    if len(queryFields) <= 0:
+    if type(queryFields) is not dict:
         proxy_instance = http_proxy.HttpProxy(address,port)
         proxy_instance.start()
     else:
@@ -49,6 +49,19 @@ def parseComplexFilter(rawFilter):
         pair = assign.split("=")
         if len(pair) == 2:
             filterDict[pair[0]] = pair[1]
+    return filterDict
+
+def parseQueryFields(rawFields):
+    if rawFields == 'all':
+        return dict()
+    filterDict = dict()
+    filterAssign = rawFields.split(",")
+    for assign in filterAssign:
+        pair = assign.split("=")
+        if len(pair) == 2:
+            filterDict[pair[0]] = '%' + pair[1] + '%'
+        elif len(pair) == 1:
+            filterDict[pair[0]] = ''
     return filterDict
 
 if __name__ == "__main__":
