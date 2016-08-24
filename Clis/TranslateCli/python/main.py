@@ -16,8 +16,8 @@ if len(sys.argv) <= 1:
 	print("Usage:")
 	exit()
 word = quote(sys.argv[1]);
-conn = HTTPConnection('dict.youdao.com');
+conn = HTTPConnection('dict.youdao.com')
 conn.request('GET','/fsearch?q='+word+'&keyfrom=mac.main&id=4E57E4CB9C43F4DEF4375A20D7F21409&vendor=fanyiindex&appVer=2.0.2&client=macdict&le=eng')
-response = conn.getresponse();
-xml = response.read();
+response = conn.getresponse()
+xml = response.read()
 parse_translated_xml(xml)

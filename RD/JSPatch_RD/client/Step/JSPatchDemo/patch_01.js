@@ -1,9 +1,23 @@
 require('NSString,JPHttp')
 // demo.js
-defineClass('AppDelegate', {
+defineClass('XXXViewController', {
             // replace the -genView method
-            bugFunc: function() {
-            _OC_log("bug fixed app delegate");
+            viewDidLoad: function() {
+                self.ORIGviewDidLoad();
+                /**
+                 [[RACObserve([EFSNFXGTradeManager sharedManager], status) distinctUntilChanged] subscribeNext:^(id x) {
+                 @strongify(self);
+                 EFSNFXGTradeSocketConnectionStatus status = [x integerValue];
+                 switch (status) {
+                 case EFSNFXGTradeSocketConnectionStatusSignTradeProtocol :{
+                 [self backAction];
+                 }
+                 break;
+                 default:
+                 break;
+                 }
+                 }];
+                 **/
             }
             });
 
