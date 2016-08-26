@@ -2,3 +2,4 @@
 **/.idea/**
 **/.codelite/**
 **/CMakeFiles/**
+*.pyc
