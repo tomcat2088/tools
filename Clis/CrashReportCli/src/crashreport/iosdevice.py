@@ -1,7 +1,7 @@
 #!/usr/local/bin/python3
 # coding: utf-8
 
-from util import *
+from crashreport.util import *
 import json
 import io,os
 import time

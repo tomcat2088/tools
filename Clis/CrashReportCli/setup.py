@@ -2,11 +2,13 @@
 
 from distutils.core import setup
 
-setup(name='Distutils',
+setup(name='crashreportcli',
       version='1.0',
-      description='Python Distribution Utilities',
-      author='Greg Ward',
-      author_email='gward@python.net',
-      url='https://www.python.org/sigs/distutils-sig/',
-      packages=['distutils', 'distutils.command'],
+      description='iOS Crash Report Util Clis',
+      author='wang yang',
+      author_email='tomcat1991@126.com',
+      packages=['crashreport','crashreport'],
+      package_dir={'crashreport': 'src/crashreport'},
+      package_data={'crashreport': ['src/crashreport/*.js']},
+      scripts=['src/crashreport/cli.py']
      )

@@ -1,14 +1,15 @@
-import io
-import re
-import debug_symbol_manager
 import json
 import os
-import util
+import re
+
+from crashreport import debug_symbol_manager
+from crashreport import util
+
 
 def process_crash(crash_file):
     symbolicatecrash = '/Applications/Xcode.app/Contents/SharedFrameworks/DVTFoundation.framework/Versions/A/Resources/symbolicatecrash'
     # use symbolicatecrash to process system backtrace
-    util.exec_wait('{0} {1} > {2}.tmp'.format(symbolicatecrash,crash_file,crash_file))
+    util.exec_wait('{0} {1} > {2}.tmp'.format(symbolicatecrash, crash_file, crash_file))
     util.exec_wait('mv {1}.tmp {2}'.format(symbolicatecrash, crash_file, crash_file))
 
     file = open(crash_file)
@@ -31,7 +32,7 @@ def process_crash(crash_file):
             if name == app_name:
                 address = ret.group(2)
                 base_address = ret.group(3)
-                result = util.exec_ret('atos -arch arm64 -o "{0}" -l {1} {2}'.format(symbol_file,base_address,address))
+                result = util.exec_ret('atos -arch arm64 -o "{0}" -l {1} {2}'.format(symbol_file, base_address, address))
                 line = re.sub(r'\s+(\w+ \+ \w+)',r' {0}'.format(result),line)
                 print(line,end="")
         else:

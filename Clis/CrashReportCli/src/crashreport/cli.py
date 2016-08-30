@@ -1,11 +1,13 @@
-#!/usr/local/bin/python3
+#!/usr/bin/env python3
 
-import sys
-import getopt
-import iosdevice
-import crlogger
-import report_collect
 import datetime
+import getopt
+import sys
+
+
+from crashreport import crlogger
+from crashreport import iosdevice
+from crashreport import report_collect
 
 usage = '''Usage: {0} [options] <action name> arguments
 
@@ -126,6 +128,3 @@ def main(argv):
 		report_collect.collect_report(app_name, udid)
 	else:
 		show_usage()
-
-if __name__ == "__main__":
-	main(sys.argv[1:])

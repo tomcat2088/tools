@@ -1,9 +1,11 @@
 #!/usr/local/bin/python3
 
+import datetime
 import os
 from shutil import copyfile
-import datetime
-import util
+
+from crashreport import util
+
 
 def crashes_tmp_dir(device_id):
 	base_tmp_dir = '/tmp/crashes'
