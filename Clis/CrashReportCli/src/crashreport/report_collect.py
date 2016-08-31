@@ -1,5 +1,3 @@
-#!/usr/local/bin/python3
-
 import datetime
 import os
 from shutil import copyfile

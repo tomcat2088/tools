@@ -10,5 +10,5 @@ setup(name='crashreportcli',
       packages=['crashreport','crashreport'],
       package_dir={'crashreport': 'src/crashreport'},
       package_data={'crashreport': ['src/crashreport/*.js']},
-      scripts=['src/crashreport/cli.py']
+      scripts=['src/crashreport/htcrashreport']
      )

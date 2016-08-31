@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 
 import datetime
 import getopt
@@ -8,6 +7,8 @@ import sys
 from crashreport import crlogger
 from crashreport import iosdevice
 from crashreport import report_collect
+from crashreport import symbol_collect
+from crashreport import symbolicate
 
 usage = '''Usage: {0} [options] <action name> arguments
 
@@ -18,11 +19,14 @@ Options:
     --version                   show version
     -u, --udid                  use device with udid
     -v, --verbose               enable verbose log output
+    -s, --dsymdir				the directory contains dSYM files
 
 Actions:
     ls                                          list devices
     run <app bundle id> <repeat count> <delay>  run app on device.if repeat count < 0,run forever
     report <app bundle id>						collect crash report
+    fsymbolicate <report file> [symbol file]	force symbolicate with latest collected dSYM file
+	cdsym <product dir> <product name>			collect dSYM file or executable file with debug symbol,use in Xcode build phases
 
 '''
 
@@ -126,5 +130,21 @@ def main(argv):
 			udid = get_device_id()
 		app_name = app_bundle_id.split('.')[-1]
 		report_collect.collect_report(app_name, udid)
+	elif action == 'fsymbolicate':
+		report = ''
+		if option_last_index + 1 < len(argv):
+			report = argv[option_last_index + 1]
+			symbolicate.process_crash(report)
+	elif action == 'cdsym':
+		product_dir = ''
+		product_name = ''
+		if option_last_index + 1 < len(argv):
+			product_dir = argv[option_last_index + 1]
+		if option_last_index + 2 < len(argv):
+			product_name = argv[option_last_index + 2]
+		if len(product_dir) > 0 and len(product_name) > 0:
+			symbol_collect.collect_symbole(product_dir,product_name)
+		else:
+			print('product dir or product name is invalid.')
 	else:
 		show_usage()
